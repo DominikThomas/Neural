@@ -9,8 +9,8 @@ import java.util.ArrayList;
  * This is an abstract class for any Neural Layer. All general attributes and 
  * behaviors intrinsic to a layer of neuron are defined in this class.
  * 
- * @author Alan de Souza, Fábio Soares
- * @version 0.1
+ * @author Alan de Souza, Fábio Soares, Dominik Thomas
+ * @version 0.2
  */
 public abstract class NeuralLayer {
     
@@ -26,7 +26,7 @@ public abstract class NeuralLayer {
     /**
      * Activation Function of this Layer
      */
-    protected IActivationFunction activationFnc;
+    protected IActivationFunction activationFunction;
     
     /**
      * Previous Layer that feeds values to this Layer
@@ -72,9 +72,12 @@ public abstract class NeuralLayer {
      */
     public NeuralLayer(int numberofneurons,IActivationFunction iaf){
         this.numberOfNeuronsInLayer=numberofneurons;
-        this.activationFnc=iaf;
+        this.activationFunction=iaf;
         neuron = new ArrayList<>(numberofneurons);
         output = new ArrayList<>(numberofneurons);
+    }
+    
+    public NeuralLayer() {
     }
     
     /**
@@ -133,14 +136,16 @@ public abstract class NeuralLayer {
      * @see NeuralLayer
      */
     protected void init(){
+        neuron = new ArrayList<>(numberOfNeuronsInLayer);
+        output = new ArrayList<>(numberOfNeuronsInLayer);
         if(numberOfNeuronsInLayer>=0){
             for(int i=0;i<numberOfNeuronsInLayer;i++){
                 try{
-                    neuron.get(i).setActivationFunction(activationFnc);
+                    neuron.get(i).setActivationFunction(activationFunction);
                     neuron.get(i).init();
                 }
                 catch(IndexOutOfBoundsException iobe){
-                    neuron.add(new Neuron(numberOfInputs,activationFnc));
+                    neuron.add(new Neuron(numberOfInputs,activationFunction));
                     neuron.get(i).init();
                 }
             }
@@ -208,5 +213,17 @@ public abstract class NeuralLayer {
             this.neuron.add(_neuron);
         }
     }
+    
+    public void setNumberOfNeurons(Integer numberOfNeurons) {
+		this.numberOfNeuronsInLayer = numberOfNeurons;
+	}
+    
+    public void setActivationFunction(IActivationFunction activationFunction) {
+		this.activationFunction = activationFunction;
+	}
+    
+    public void setNumberOfInputs(int numberOfInputs) {
+		this.numberOfInputs = numberOfInputs;
+	}
     
 }

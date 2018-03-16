@@ -8,12 +8,11 @@ import com.dominikthomas.neuralnet.math.IActivationFunction;
  * This class extends from NeuralLayer and represents a hidden layer in a Neural 
  * Network
  * 
- * @authors Alan de Souza, Fábio Soares 
- * @version 0.1
+ * @authors Alan de Souza, Fábio Soares, Dominik Thomas
+ * @version 0.2
  * 
  */
 public class HiddenLayer extends NeuralLayer {
-    
     /**
      * HiddenLayer constructor
      * 
@@ -27,6 +26,9 @@ public class HiddenLayer extends NeuralLayer {
         super(numberofneurons,iaf);
         numberOfInputs=numberofinputs;
         init();
+    }
+    
+    public HiddenLayer() {
     }
     
     /**

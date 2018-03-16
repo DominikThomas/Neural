@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * (forward).
  * 
  * @author Alan de Souza, Fábio Soares, Dominik Thomas
- * @version 0.2
+ * @version 0.3
  */
 public class NeuralNet {
     
@@ -22,19 +22,11 @@ public class NeuralNet {
     /**
      * Neural Network array of hidden layers, that may contain 0 or many
      */
-    private ArrayList<HiddenLayer> hiddenLayer;
+    private ArrayList<HiddenLayer> hiddenLayers;
     /**
      * Neural Network Output Layer
      */
     private OutputLayer outputLayer;
-    /**
-     * List of number of neurons per hidden Layer
-     */
-    private ArrayList<Integer> numberOfHiddenNeurons;
-    /**
-     * List of Activation functions per hidden Layer
-     */
-    private ArrayList<IActivationFunction> hiddenAcFnc;
     /**
      * Output Activation function
      */
@@ -79,58 +71,34 @@ public class NeuralNet {
     
     public void init() throws Exception{
     
-        numberOfHiddenLayers=numberOfHiddenNeurons.size();
-        if(numberOfHiddenLayers==hiddenAcFnc.size()){
+        numberOfHiddenLayers=hiddenLayers.size();
             input=new ArrayList<>(numberOfInputs);
             inputLayer=new InputLayer(numberOfInputs);
             if(numberOfHiddenLayers>0){
-                hiddenLayer=new ArrayList<>(numberOfHiddenLayers);
             }
             for(int i=0;i<numberOfHiddenLayers;i++){
                 if(i==0){
-                    try{
-                        hiddenLayer.set(i,new HiddenLayer(numberOfHiddenNeurons.get(i),
-                            hiddenAcFnc.get(i),
-                            inputLayer.getNumberOfNeuronsInLayer()));
+                        hiddenLayers.get(i).setPreviousLayer(inputLayer);
+                        hiddenLayers.get(i).setNumberOfInputs(inputLayer.getNumberOfNeuronsInLayer());
+                        inputLayer.setNextLayer(hiddenLayers.get(i));
+                } else{
+                        hiddenLayers.get(i).setPreviousLayer(hiddenLayers.get(i-1));
+                        hiddenLayers.get(i).setNumberOfInputs(hiddenLayers.get(i-1).getNumberOfNeuronsInLayer());
+                        hiddenLayers.get(i-1).setNextLayer(hiddenLayers.get(i));
                     }
-                    catch(IndexOutOfBoundsException iobe){
-                        hiddenLayer.add(new HiddenLayer(numberOfHiddenNeurons.get(i),
-                            hiddenAcFnc.get(i),
-                            inputLayer.getNumberOfNeuronsInLayer()));
-                    }
-                    inputLayer.setNextLayer(hiddenLayer.get(i));
                 }
-                else{
-                    try{
-                        hiddenLayer.set(i, new HiddenLayer(numberOfHiddenNeurons.get(i),
-                             hiddenAcFnc.get(i),hiddenLayer.get(i-1)
-                            .getNumberOfNeuronsInLayer()
-                            ));
-                    }
-                    catch(IndexOutOfBoundsException iobe){
-                        hiddenLayer.add(new HiddenLayer(numberOfHiddenNeurons.get(i),
-                             hiddenAcFnc.get(i),hiddenLayer.get(i-1)
-                            .getNumberOfNeuronsInLayer()
-                            ));
-                    }
-                    hiddenLayer.get(i-1).setNextLayer(hiddenLayer.get(i));
-                }
-            }
             if(numberOfHiddenLayers>0){
                 outputLayer=new OutputLayer(numberOfOutputs,outputAcFnc,
-                        hiddenLayer.get(numberOfHiddenLayers-1)
+                        hiddenLayers.get(numberOfHiddenLayers-1)
                         .getNumberOfNeuronsInLayer() 
                         );
-                hiddenLayer.get(numberOfHiddenLayers-1).setNextLayer(outputLayer);
+                hiddenLayers.get(numberOfHiddenLayers-1).setNextLayer(outputLayer);
             }
             else{
                 outputLayer=new OutputLayer(numberOfInputs, outputAcFnc,
                 		numberOfOutputs);
                 inputLayer.setNextLayer(outputLayer);
             }
-        } else {
-        	throw new Exception ("Number of hidden layers does not equal the number of activation functions.");
-        }
     }
     
     /**
@@ -172,7 +140,8 @@ public class NeuralNet {
         inputLayer.calc();
         if(numberOfHiddenLayers>0){
             for(int i=0;i<numberOfHiddenLayers;i++){
-                HiddenLayer hl = hiddenLayer.get(i);
+                HiddenLayer hl = hiddenLayers.get(i);
+                hl.init();
                 hl.setInputs(hl.getPreviousLayer().getOutputs());
                 hl.calc();
             }
@@ -210,13 +179,11 @@ public class NeuralNet {
 		this.numberOfOutputs = numberOfOutputs;
 	}
     
-    public void setNumberOfHiddenNeurons(ArrayList<Integer> numberOfHiddenNeurons) {
-		this.numberOfHiddenNeurons = numberOfHiddenNeurons;
-	}
-    public void setHiddenAcFnc(ArrayList<IActivationFunction> hiddenAcFnc) {
-		this.hiddenAcFnc = hiddenAcFnc;
-	}
     public void setOutputAcFnc(IActivationFunction outputAcFnc) {
 		this.outputAcFnc = outputAcFnc;
+	}
+    
+    public void setHiddenLayers(ArrayList<HiddenLayer> hiddenLayers) {
+		this.hiddenLayers = hiddenLayers;
 	}
 }
