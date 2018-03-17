@@ -15,6 +15,7 @@ import com.dominikthomas.neuralnet.beans.NeuralNet;
  * Network in Java 
  *
  * @author Alan de Souza, Fábio Soares, Dominik Thomas
+ * @version 0.2
  */
 public class NeuralNetSpring {
 	@SuppressWarnings("resource")
@@ -23,6 +24,8 @@ public class NeuralNetSpring {
 		// loading the definitions from the given XML file
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"neuralnet/applicationContext.xml");
+
+		RandomNumberGenerator.setSeed(0);
  
 		NeuralNet nn = (NeuralNet) context
 				.getBean("neuralNet");
@@ -33,8 +36,6 @@ public class NeuralNetSpring {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-        RandomNumberGenerator.setSeed(0);
         
         double [] neuralInput = { 1.5 , 0.5 };
         
