@@ -17,6 +17,7 @@
 			<list value-type="com.dominikthomas.neuralnet.HiddenLayer">
 				<ref bean="layer1"/>
 				<ref bean="layer2"/>
+				<bean id="layer3" parent = "layer2"/>
 			</list>
 		</property>
 		<property name="outputAcFnc" ref="linear" />
@@ -30,7 +31,7 @@
 	
 	<bean id="layer2"
 		class="com.dominikthomas.neuralnet.beans.HiddenLayer" >
-		<property name="numberOfNeurons" value="3" />
+		<property name="numberOfNeurons" value="5" />
 		<property name="activationFunction" ref="sigmoid" />
 	</bean>
 	

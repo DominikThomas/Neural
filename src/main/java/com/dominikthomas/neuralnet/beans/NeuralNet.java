@@ -69,7 +69,7 @@ public class NeuralNet {
     public NeuralNet(){
     }
     
-    public void init() throws Exception{
+    public void init(){
     
         numberOfHiddenLayers=hiddenLayers.size();
             input=new ArrayList<>(numberOfInputs);
