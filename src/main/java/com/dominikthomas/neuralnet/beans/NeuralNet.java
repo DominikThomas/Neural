@@ -34,7 +34,7 @@ public class NeuralNet {
     /**
      * Number of Hidden Layers
      */
-    private int numberOfHiddenLayers;
+    private int numberOfHiddenLayers = 0;
     /**
      * Number of Inputs
      */
@@ -70,35 +70,36 @@ public class NeuralNet {
     }
     
     public void init(){
-    
-        numberOfHiddenLayers=hiddenLayers.size();
-            input=new ArrayList<>(numberOfInputs);
-            inputLayer=new InputLayer(numberOfInputs);
-            if(numberOfHiddenLayers>0){
-            }
-            for(int i=0;i<numberOfHiddenLayers;i++){
-                if(i==0){
-                        hiddenLayers.get(i).setPreviousLayer(inputLayer);
-                        hiddenLayers.get(i).setNumberOfInputs(inputLayer.getNumberOfNeuronsInLayer());
-                        inputLayer.setNextLayer(hiddenLayers.get(i));
-                } else{
-                        hiddenLayers.get(i).setPreviousLayer(hiddenLayers.get(i-1));
-                        hiddenLayers.get(i).setNumberOfInputs(hiddenLayers.get(i-1).getNumberOfNeuronsInLayer());
-                        hiddenLayers.get(i-1).setNextLayer(hiddenLayers.get(i));
-                    }
-                }
-            if(numberOfHiddenLayers>0){
-                outputLayer=new OutputLayer(numberOfOutputs,outputAcFnc,
-                        hiddenLayers.get(numberOfHiddenLayers-1)
-                        .getNumberOfNeuronsInLayer() 
-                        );
-                hiddenLayers.get(numberOfHiddenLayers-1).setNextLayer(outputLayer);
-            }
-            else{
-                outputLayer=new OutputLayer(numberOfInputs, outputAcFnc,
-                		numberOfOutputs);
-                inputLayer.setNextLayer(outputLayer);
-            }
+    	if(hiddenLayers != null) { 
+    		numberOfHiddenLayers=hiddenLayers.size();
+        }
+        input=new ArrayList<>(numberOfInputs);
+        inputLayer=new InputLayer(numberOfInputs);
+        if(numberOfHiddenLayers>0){
+	        for(int i=0;i<numberOfHiddenLayers;i++){
+	            if(i==0){
+	                    hiddenLayers.get(i).setPreviousLayer(inputLayer);
+	                    hiddenLayers.get(i).setNumberOfInputs(inputLayer.getNumberOfNeuronsInLayer());
+	                    inputLayer.setNextLayer(hiddenLayers.get(i));
+	            } else{
+	                    hiddenLayers.get(i).setPreviousLayer(hiddenLayers.get(i-1));
+	                    hiddenLayers.get(i).setNumberOfInputs(hiddenLayers.get(i-1).getNumberOfNeuronsInLayer());
+	                    hiddenLayers.get(i-1).setNextLayer(hiddenLayers.get(i));
+	                }
+	            }
+        }
+        if(numberOfHiddenLayers>0){
+            outputLayer=new OutputLayer(numberOfOutputs,outputAcFnc,
+                    hiddenLayers.get(numberOfHiddenLayers-1)
+                    .getNumberOfNeuronsInLayer() 
+                    );
+            hiddenLayers.get(numberOfHiddenLayers-1).setNextLayer(outputLayer);
+        }
+        else{
+            outputLayer=new OutputLayer(numberOfOutputs, outputAcFnc,
+            		numberOfInputs);
+            inputLayer.setNextLayer(outputLayer);
+        }
     }
     
     /**
