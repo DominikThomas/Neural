@@ -10,11 +10,11 @@
  	<import resource="activationFunctions.xml"/>
  	
 	<bean id="neuralNet"
-		class="com.dominikthomas.neuralnet.beans.NeuralNet" >
+		class="io.github.dominikthomas.neuralnet.beans.NeuralNet" >
 		<property name="numberOfInputs" value="3" />
 		<property name="numberOfOutputs" value="1" />
 		<property name="hiddenLayers">
-			<list value-type="com.dominikthomas.neuralnet.HiddenLayer">
+			<list value-type="io.github.dominikthomas.neuralnet.HiddenLayer">
 				<ref bean="layer1"/>
 				<ref bean="layer2"/>
 				<bean id="layer3" parent = "layer2"/>
@@ -24,13 +24,13 @@
 	</bean>
 	
 	<bean id="layer1"
-		class="com.dominikthomas.neuralnet.beans.HiddenLayer" >
+		class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
 		<property name="numberOfNeurons" value="10" />
 		<property name="activationFunction" ref="sigmoid" />
 	</bean>
 	
 	<bean id="layer2"
-		class="com.dominikthomas.neuralnet.beans.HiddenLayer" >
+		class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
 		<property name="numberOfNeurons" value="5" />
 		<property name="activationFunction" ref="sigmoid" />
 	</bean>

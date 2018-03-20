@@ -1,4 +1,4 @@
-package com.dominikthomas.neuralnet.math;
+package io.github.dominikthomas.neuralnet.math;
 
 import java.util.Random;
 

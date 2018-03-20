@@ -1,6 +1,6 @@
-package com.dominikthomas.neuralnet.beans;
+package io.github.dominikthomas.neuralnet.beans;
 
-import com.dominikthomas.neuralnet.math.IActivationFunction;
+import io.github.dominikthomas.neuralnet.math.IActivationFunction;
 
 /**
  *

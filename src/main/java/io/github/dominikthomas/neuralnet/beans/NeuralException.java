@@ -1,4 +1,4 @@
-package com.dominikthomas.neuralnet.beans;
+package io.github.dominikthomas.neuralnet.beans;
 
 /**
  *

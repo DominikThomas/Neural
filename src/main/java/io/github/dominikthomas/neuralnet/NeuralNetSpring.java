@@ -1,4 +1,4 @@
-package com.dominikthomas.neuralnet;
+package io.github.dominikthomas.neuralnet;
 
 import java.util.Arrays;
 
@@ -6,9 +6,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StopWatch;
 
-import com.dominikthomas.neuralnet.math.RandomNumberGenerator;
-import com.dominikthomas.neuralnet.beans.NeuralException;
-import com.dominikthomas.neuralnet.beans.NeuralNet;
+import io.github.dominikthomas.neuralnet.beans.NeuralException;
+import io.github.dominikthomas.neuralnet.beans.NeuralNet;
+import io.github.dominikthomas.neuralnet.math.RandomNumberGenerator;
 
 /**
  *

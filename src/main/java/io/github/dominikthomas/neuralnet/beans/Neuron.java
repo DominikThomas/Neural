@@ -1,8 +1,9 @@
-package com.dominikthomas.neuralnet.beans;
+package io.github.dominikthomas.neuralnet.beans;
 
-import com.dominikthomas.neuralnet.math.IActivationFunction;
-import com.dominikthomas.neuralnet.math.RandomNumberGenerator;
 import java.util.ArrayList;
+
+import io.github.dominikthomas.neuralnet.math.IActivationFunction;
+import io.github.dominikthomas.neuralnet.math.RandomNumberGenerator;
 
 
 /**
