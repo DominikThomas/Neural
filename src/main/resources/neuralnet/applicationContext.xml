@@ -11,7 +11,7 @@
  	
 	<bean id="neuralNet"
 		class="com.dominikthomas.neuralnet.beans.NeuralNet" >
-		<property name="numberOfInputs" value="2" />
+		<property name="numberOfInputs" value="3" />
 		<property name="numberOfOutputs" value="1" />
 		<property name="hiddenLayers">
 			<list value-type="com.dominikthomas.neuralnet.HiddenLayer">

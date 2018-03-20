@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StopWatch;
 
 import com.dominikthomas.neuralnet.math.RandomNumberGenerator;
+import com.dominikthomas.neuralnet.beans.NeuralException;
 import com.dominikthomas.neuralnet.beans.NeuralNet;
 
 /**
@@ -31,36 +32,41 @@ public class NeuralNetSpring {
 
 		RandomNumberGenerator.setSeed(System.currentTimeMillis());
  
-		NeuralNet nn = (NeuralNet) context
-				.getBean("neuralNet");
-		
-		stopWatch.stop();
-        System.out.println("Init took: " + stopWatch.getLastTaskTimeMillis() + "ms.");
-        stopWatch.start();
-        
-		nn.init();
-        
-        double [] neuralInput = { 1.5 , 0.5 };
-        
-        double [] neuralOutput;
-        nn.setInputs(neuralInput);
-        nn.calc();
-        neuralOutput=nn.getOutputs();
-        System.out.println(Arrays.toString(neuralOutput));
-        
-        stopWatch.stop();        
-        System.out.println("Elapsed time: " + stopWatch.getLastTaskTimeMillis() + "ms.");
-        stopWatch.start();
-        
-        nn.init();
-        
-        neuralInput[0] = 1.0;
-        neuralInput[1] = 2.1;
-        
-        nn.setInputs(neuralInput);
-        nn.calc();
-        neuralOutput=nn.getOutputs();
-        System.out.println(Arrays.toString(neuralOutput));
+		try {
+			NeuralNet nn = (NeuralNet) context
+					.getBean("neuralNet");
+			
+			stopWatch.stop();
+	        System.out.println("Init took: " + stopWatch.getLastTaskTimeMillis() + "ms.");
+	        stopWatch.start();
+	        
+			nn.init();
+	        
+	        double [] neuralInput = { 1.5 , 0.5 , 2.5};
+	        
+	        double [] neuralOutput;
+				nn.setInputs(neuralInput);
+	        nn.calc();
+	        neuralOutput=nn.getOutputs();
+	        System.out.println(Arrays.toString(neuralOutput));
+	        
+	        stopWatch.stop();        
+	        System.out.println("Elapsed time: " + stopWatch.getLastTaskTimeMillis() + "ms.");
+	        stopWatch.start();
+	        
+	        nn.init();
+	        
+	        neuralInput[0] = 1.0;
+	        neuralInput[1] = 2.1;
+	        neuralInput[2] = 0.1;
+	        
+	        nn.setInputs(neuralInput);
+	        nn.calc();
+	        neuralOutput=nn.getOutputs();
+	        System.out.println(Arrays.toString(neuralOutput));
+		} catch (NeuralException e) {
+			e.printStackTrace();
+		}
         
         stopWatch.stop();        
         System.out.println("Elapsed time: " + stopWatch.getLastTaskTimeMillis() + "ms.");
