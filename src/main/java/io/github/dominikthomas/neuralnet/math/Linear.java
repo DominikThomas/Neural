@@ -50,4 +50,9 @@ public class Linear implements IActivationFunction {
         return a*x;
     }
     
+    @Override 
+    public double derivative(double x){
+        return a;
+    }
+    
 }

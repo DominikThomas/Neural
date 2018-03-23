@@ -28,13 +28,17 @@ public class NeuralNetSpring {
  
 		// loading the definitions from the given XML file
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"neuralnet/applicationContext.xml");
+				"neuralnetspring/applicationContext.xml");
 
 		RandomNumberGenerator.setSeed(System.currentTimeMillis());
  
 		try {
+			System.out.println("Creating Neural Network...");
+			
 			NeuralNet nn = (NeuralNet) context
 					.getBean("neuralNet");
+			
+			System.out.println("Neural Network created!");
 			
 			stopWatch.stop();
 	        System.out.println("Init took: " + stopWatch.getLastTaskTimeMillis() + "ms.");
@@ -45,10 +49,21 @@ public class NeuralNetSpring {
 	        double [] neuralInput = { 1.5 , 0.5 , 2.5};
 	        
 	        double [] neuralOutput;
-				nn.setInputs(neuralInput);
+	        
+	        StringBuilder sb = new StringBuilder();
+	        sb.append("Feeding the values [");
+	        for(double input : neuralInput) {
+	        	sb.append(String.valueOf(input)).append(", ");
+	        }
+	        sb.setLength(sb.length() - 2); // length of the ", " string is 2
+	        sb.append("] to the neural network");
+	        System.out.println(sb.toString());
+	        
+			nn.setInputs(neuralInput);
 	        nn.calc();
 	        neuralOutput=nn.getOutputs();
-	        System.out.println(Arrays.toString(neuralOutput));
+	        
+	        System.out.println("Output generated: " + Arrays.toString(neuralOutput));
 	        
 	        stopWatch.stop();        
 	        System.out.println("Elapsed time: " + stopWatch.getLastTaskTimeMillis() + "ms.");
@@ -60,10 +75,21 @@ public class NeuralNetSpring {
 	        neuralInput[1] = 2.1;
 	        neuralInput[2] = 0.1;
 	        
+	        sb = new StringBuilder();
+	        sb.append("Feeding the values [");
+	        for(double input : neuralInput) {
+	        	sb.append(String.valueOf(input)).append(", ");
+	        }
+	        sb.setLength(sb.length() - 2); // length of the ", " string is 2
+	        sb.append("] to the neural network");
+	        System.out.println(sb.toString());
+	        
 	        nn.setInputs(neuralInput);
 	        nn.calc();
 	        neuralOutput=nn.getOutputs();
-	        System.out.println(Arrays.toString(neuralOutput));
+	        
+	        System.out.println("Output generated: " + Arrays.toString(neuralOutput));
+	        
 		} catch (NeuralException e) {
 			e.printStackTrace();
 		}

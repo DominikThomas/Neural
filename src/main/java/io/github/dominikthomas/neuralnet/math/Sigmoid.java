@@ -39,4 +39,9 @@ public class Sigmoid implements IActivationFunction {
     public double calc(double x){
         return 1.0/(1.0+Math.exp(-a*x));
     }
+    
+    @Override 
+    public double derivative(double x){
+        return calc(x)*(1-calc(x));
+    }
 }

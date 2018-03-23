@@ -12,7 +12,7 @@ import io.github.dominikthomas.neuralnet.math.IActivationFunction;
  * (forward).
  * 
  * @author Alan de Souza, Fábio Soares, Dominik Thomas
- * @version 0.3
+ * @version 0.4
  */
 public class NeuralNet {
     
@@ -53,6 +53,8 @@ public class NeuralNet {
      * Array of neural outputs
      */
     private ArrayList<Double> output;
+    
+    private boolean activeBias=true;
     
     /**
      * NeuralNet constructor
@@ -171,6 +173,42 @@ public class NeuralNet {
             _outputs[i]=output.get(i);
         }
         return _outputs;
+    }
+    
+    public boolean isBiasActive(){
+        return activeBias;
+    }
+    
+    public HiddenLayer getHiddenLayer(int i){
+        return hiddenLayers.get(i);
+    }
+    
+    public OutputLayer getOutputLayer(){
+        return outputLayer;
+    }
+    
+    public int getNumberOfInputs(){
+        return numberOfInputs;
+    }
+    
+    public int getNumberOfHiddenLayers(){
+        return numberOfHiddenLayers;
+    }
+    
+    public int getNumberOfOutputs(){
+        return numberOfOutputs;
+    }
+    
+    public Double getInput(int i){
+        return input.get(i);
+    }
+    
+    public double[] getInputs(){
+        double[] result=new double[numberOfInputs];
+        for(int i=0;i<numberOfInputs;i++){
+            result[i]=input.get(i);
+        }
+        return result;
     }
     
     public void setNumberOfInputs(int numberOfInputs) {

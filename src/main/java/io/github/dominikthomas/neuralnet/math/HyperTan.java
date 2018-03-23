@@ -50,4 +50,9 @@ public class HyperTan implements IActivationFunction {
         return (1.0-Math.exp(-a*x))/(1.0+Math.exp(-a*x));
     }
     
+    @Override 
+    public double derivative(double x){
+        return (1.0)-Math.pow(calc(x),2.0);
+    }
+    
 }

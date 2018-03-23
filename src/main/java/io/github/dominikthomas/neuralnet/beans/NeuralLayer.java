@@ -11,7 +11,7 @@ import io.github.dominikthomas.neuralnet.math.IActivationFunction;
  * behaviors intrinsic to a layer of neuron are defined in this class.
  * 
  * @author Alan de Souza, Fábio Soares, Dominik Thomas
- * @version 0.2
+ * @version 0.3
  */
 public abstract class NeuralLayer {
     
@@ -196,7 +196,7 @@ public abstract class NeuralLayer {
      * @param i java index of the neuron
      * @return Returns the Neuron at the i-th java position in the layer
      */
-    protected Neuron getNeuron(int i){
+    public Neuron getNeuron(int i){
         return neuron.get(i);
     }
     
@@ -213,6 +213,22 @@ public abstract class NeuralLayer {
         catch(IndexOutOfBoundsException iobe){
             this.neuron.add(_neuron);
         }
+    }
+    
+    public Double getWeight(int i,int j){
+        return this.neuron.get(j).getWeight(i);
+    }
+    
+    public ArrayList<Double> getArrayListInputs(){
+        return input;
+    }
+    
+    public double[] getInputs(){
+        double[] result = new double[numberOfInputs];
+        for(int i=0;i<numberOfInputs;i++){
+            result[i]=input.get(i);
+        }
+        return result;
     }
     
     public void setNumberOfNeurons(Integer numberOfNeurons) {

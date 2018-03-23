@@ -253,6 +253,31 @@ public class Neuron {
         output=activationFunction.calc(outputBeforeActivation);
     }
     
+    public Double derivative(double[] _input){
+        Double _outputBeforeActivation=0.0;
+        if(numberOfInputs>0){
+            if(weight!=null){
+                for(int i=0;i<=numberOfInputs;i++){
+                    _outputBeforeActivation+=(i==numberOfInputs?bias:_input[i])*weight.get(i);
+                }
+            }
+        }
+        return activationFunction.derivative(_outputBeforeActivation);
+    }
+    
+    public ArrayList<Double> derivativeBatch(ArrayList<ArrayList<Double>> _input){
+        ArrayList<Double> result = new ArrayList<>();
+        for(int i=0;i<_input.size();i++){
+            result.add(0.0);
+            Double _outputBeforeActivation=0.0;
+            for(int j=0;j<numberOfInputs;j++){
+                _outputBeforeActivation+=(j==numberOfInputs?bias:_input.get(i).get(j))*weight.get(j);
+            }
+            result.set(i,activationFunction.derivative(_outputBeforeActivation));
+        }
+        return result;
+    }
+    
     /**
      * setActivationFunction
      * Sets the activation function of this neuron
@@ -270,5 +295,8 @@ public class Neuron {
         return outputBeforeActivation;
     }
 
+    public Double getWeight(int i){
+        return weight.get(i);
+    }
     
 }
