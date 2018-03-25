@@ -100,6 +100,11 @@ public class NeuralNet {
             		numberOfInputs);
             inputLayer.setNextLayer(outputLayer);
         }
+        if(activeBias) {
+        	activateBias();
+        } else {
+        	deactivateBias();
+        }
     }
     
     /**
@@ -175,9 +180,39 @@ public class NeuralNet {
         return _outputs;
     }
     
+    public void deactivateBias(){
+        if(numberOfHiddenLayers>0){
+            for(HiddenLayer hl:hiddenLayers){
+                for(Neuron n:hl.getListOfNeurons()){
+                    n.deactivateBias();
+                }
+            }
+        }
+        for(Neuron n:outputLayer.getListOfNeurons()){
+            n.deactivateBias();
+        }
+    }
+    
+    public void activateBias(){
+    	if(numberOfHiddenLayers>0){
+	        for(HiddenLayer hl:hiddenLayers){
+	            for(Neuron n:hl.getListOfNeurons()){
+	                n.activateBias();
+	            }
+	        }
+    	}
+        for(Neuron n:outputLayer.getListOfNeurons()){
+            n.activateBias();
+        }
+    }
+    
     public boolean isBiasActive(){
         return activeBias;
     }
+    
+    public void setActiveBias(boolean activeBias) {
+		this.activeBias = activeBias;
+	}
     
     public HiddenLayer getHiddenLayer(int i){
         return hiddenLayers.get(i);

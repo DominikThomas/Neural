@@ -294,6 +294,14 @@ public class Neuron {
     public double getOutputBeforeActivation(){
         return outputBeforeActivation;
     }
+    
+    public void deactivateBias(){
+        this.bias=0.0;
+    }
+    
+    public void activateBias(){
+        this.bias=1.0;
+    }
 
     public Double getWeight(int i){
         return weight.get(i);
