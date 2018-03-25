@@ -2,16 +2,11 @@ package io.github.dominikthomas.neuralnet.learn;
 
 import io.github.dominikthomas.neuralnet.beans.HiddenLayer;
 import io.github.dominikthomas.neuralnet.beans.NeuralException;
-import io.github.dominikthomas.neuralnet.beans.NeuralNet;
 import io.github.dominikthomas.neuralnet.beans.Neuron;
 import io.github.dominikthomas.neuralnet.beans.OutputLayer;
 import io.github.dominikthomas.neuralnet.data.NeuralDataSet;
 import java.util.ArrayList;
 
-/**
- *
- * @author fab
- */
 public class DeltaRule extends LearningAlgorithm {
     
     public ArrayList<ArrayList<Double>> error;
@@ -37,8 +32,6 @@ public class DeltaRule extends LearningAlgorithm {
     
     private ArrayList<ArrayList<ArrayList<Double>>> newWeights;
     
-    private NeuralNet neuralNet;
-    
     private NeuralDataSet trainingDataSet;
     
     private NeuralDataSet testingDataSet;
@@ -52,15 +45,15 @@ public class DeltaRule extends LearningAlgorithm {
     	getTestingDataSet().init();
     	this.learningParadigm=LearningParadigm.SUPERVISED;
         this.newWeights=new ArrayList<>();
-        int numberOfHiddenLayers=this.neuralNet.getNumberOfHiddenLayers();
+        int numberOfHiddenLayers=super.neuralNet.getNumberOfHiddenLayers();
         for(int l=0;l<=numberOfHiddenLayers;l++){
             int numberOfNeuronsInLayer,numberOfInputsInNeuron;
             this.newWeights.add(new ArrayList<ArrayList<Double>>());
             if(l<numberOfHiddenLayers){
-                numberOfNeuronsInLayer=this.neuralNet.getHiddenLayer(l)
+                numberOfNeuronsInLayer=super.neuralNet.getHiddenLayer(l)
                         .getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
-                    numberOfInputsInNeuron=this.neuralNet.getHiddenLayer(l)
+                    numberOfInputsInNeuron=super.neuralNet.getHiddenLayer(l)
                             .getNeuron(j).getNumberOfInputs();
                     this.newWeights.get(l).add(new ArrayList<Double>());
                     for(int i=0;i<=numberOfInputsInNeuron;i++){
@@ -69,10 +62,10 @@ public class DeltaRule extends LearningAlgorithm {
                 }
             }
             else{
-                numberOfNeuronsInLayer=this.neuralNet.getOutputLayer()
+                numberOfNeuronsInLayer=super.neuralNet.getOutputLayer()
                         .getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
-                    numberOfInputsInNeuron=this.neuralNet.getOutputLayer()
+                    numberOfInputsInNeuron=super.neuralNet.getOutputLayer()
                             .getNeuron(j).getNumberOfInputs();
                     this.newWeights.get(l).add(new ArrayList<Double>());
                     for(int i=0;i<=numberOfInputsInNeuron;i++){
@@ -84,10 +77,10 @@ public class DeltaRule extends LearningAlgorithm {
         this.generalError=new ArrayList<>();
         this.error=new ArrayList<>();
         this.overallError=new ArrayList<>();
-        for(int i=0;i<this.trainingDataSet.numberOfRecords;i++){ //numberOfRecords
+        for(int i=0;i<super.trainingDataSet.numberOfRecords;i++){ //numberOfRecords
             this.generalError.add(null);
             this.error.add(new ArrayList<Double>());
-            for(int j=0;j<this.neuralNet.getNumberOfOutputs();j++){
+            for(int j=0;j<super.neuralNet.getNumberOfOutputs();j++){
                 if(i==0){
                     this.overallError.add(null);
                 }
@@ -259,7 +252,7 @@ public class DeltaRule extends LearningAlgorithm {
                         }   
                         applyNewWeights();
                         currentRecord=++k;
-                        if(k>=trainingDataSet.numberOfRecords){
+                        if(k>=super.trainingDataSet.numberOfRecords){
                             k=0;
                             currentRecord=0;
                             epoch++;
@@ -278,11 +271,11 @@ public class DeltaRule extends LearningAlgorithm {
     }
     
     public void applyNewWeights(){
-        int numberOfHiddenLayers=this.neuralNet.getNumberOfHiddenLayers();
+        int numberOfHiddenLayers=super.neuralNet.getNumberOfHiddenLayers();
         for(int l=0;l<=numberOfHiddenLayers;l++){
             int numberOfNeuronsInLayer,numberOfInputsInNeuron;
             if(l<numberOfHiddenLayers){
-                HiddenLayer hl = this.neuralNet.getHiddenLayer(l);
+                HiddenLayer hl = super.neuralNet.getHiddenLayer(l);
                 numberOfNeuronsInLayer=hl.getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
                     numberOfInputsInNeuron=hl.getNeuron(j).getNumberOfInputs();
@@ -293,7 +286,7 @@ public class DeltaRule extends LearningAlgorithm {
                 }
             }
             else{
-                OutputLayer ol = this.neuralNet.getOutputLayer();
+                OutputLayer ol = super.neuralNet.getOutputLayer();
                 numberOfNeuronsInLayer=ol.getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
                     numberOfInputsInNeuron=ol.getNeuron(j).getNumberOfInputs();
@@ -314,28 +307,28 @@ public class DeltaRule extends LearningAlgorithm {
                     + "layer neural network");
         }
         else{
-            neuralNet.setInputs(trainingDataSet.getArrayInputRecord(i));
+            neuralNet.setInputs(super.trainingDataSet.getArrayInputRecord(i));
             neuralNet.calc();
-            trainingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
+            super.trainingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
             generalError.set(i, 
                     generalError(
-                            trainingDataSet.getArrayTargetOutputRecord(i)
-                            ,trainingDataSet.getArrayNeuralOutputRecord(i)));
+                            super.trainingDataSet.getArrayTargetOutputRecord(i)
+                            ,super.trainingDataSet.getArrayNeuralOutputRecord(i)));
             for(int j=0;j<neuralNet.getNumberOfOutputs();j++){
                 overallError.set(j, 
-                        overallError(trainingDataSet
+                        overallError(super.trainingDataSet
                                 .getIthTargetOutputArrayList(j)
-                                , trainingDataSet
+                                , super.trainingDataSet
                                         .getIthNeuralOutputArrayList(j)));
                 error.get(i).set(j
-                        ,simpleError(trainingDataSet
+                        ,simpleError(super.trainingDataSet
                                 .getIthTargetOutputArrayList(j).get(i)
-                                , trainingDataSet.getIthNeuralOutputArrayList(j)
+                                , super.trainingDataSet.getIthNeuralOutputArrayList(j)
                                         .get(i)));
             }
             overallGeneralError=overallGeneralErrorArrayList(
-                    trainingDataSet.getArrayTargetOutputData()
-                    ,trainingDataSet.getArrayNeuralOutputData());
+                    super.trainingDataSet.getArrayTargetOutputData()
+                    ,super.trainingDataSet.getArrayNeuralOutputData());
             //simpleError=simpleErrorEach.get(i);
         }
     }
@@ -415,10 +408,10 @@ public class DeltaRule extends LearningAlgorithm {
     	this.testingGeneralError=new ArrayList<>();
         this.testingError=new ArrayList<>();
         this.testingOverallError=new ArrayList<>();
-        for(int i=0;i<this.testingDataSet.numberOfRecords;i++){
+        for(int i=0;i<super.testingDataSet.numberOfRecords;i++){
             this.testingGeneralError.add(null);
             this.testingError.add(new ArrayList<Double>());
-            for(int j=0;j<this.neuralNet.getNumberOfOutputs();j++){
+            for(int j=0;j<super.neuralNet.getNumberOfOutputs();j++){
                 if(i==0){
                     this.testingOverallError.add(null);
                 }
@@ -430,32 +423,32 @@ public class DeltaRule extends LearningAlgorithm {
                     + " layer neural network");
         }
         else{
-            for(int i=0;i<testingDataSet.numberOfRecords;i++){
-                neuralNet.setInputs(testingDataSet.getInputRecord(i));
+            for(int i=0;i<super.testingDataSet.numberOfRecords;i++){
+                neuralNet.setInputs(super.testingDataSet.getInputRecord(i));
                 neuralNet.calc();
-                testingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
+                super.testingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
                 testingGeneralError.set(i, 
                     generalError(
-                            testingDataSet.getArrayTargetOutputRecord(i)
-                            ,testingDataSet.getArrayNeuralOutputRecord(i)));
+                            super.testingDataSet.getArrayTargetOutputRecord(i)
+                            ,super.testingDataSet.getArrayNeuralOutputRecord(i)));
                 for(int j=0;j<neuralNet.getNumberOfOutputs();j++){
                     testingError.get(i).set(j
-                        ,simpleError(testingDataSet
+                        ,simpleError(super.testingDataSet
                                 .getArrayTargetOutputRecord(i).get(j)
-                                , testingDataSet.getArrayNeuralOutputRecord(i)
+                                , super.testingDataSet.getArrayNeuralOutputRecord(i)
                                         .get(j)));
                 }
             }
             for(int j=0;j<neuralNet.getNumberOfOutputs();j++){
                 testingOverallError.set(j, 
-                        overallError(testingDataSet
+                        overallError(super.testingDataSet
                                 .getIthTargetOutputArrayList(j)
-                                , testingDataSet
+                                , super.testingDataSet
                                         .getIthNeuralOutputArrayList(j)));
             }
             testingOverallGeneralError=overallGeneralErrorArrayList(
-                    testingDataSet.getArrayTargetOutputData()
-                    ,testingDataSet.getArrayNeuralOutputData());
+                    super.testingDataSet.getArrayTargetOutputData()
+                    ,super.testingDataSet.getArrayNeuralOutputData());
             //simpleError=simpleErrorEach.get(trainingDataSet.numberOfRecords-1);
         }
     }
@@ -587,29 +580,4 @@ public class DeltaRule extends LearningAlgorithm {
         return testingOverallError.get(output);
     }
 
-    public void setNeuralNet(NeuralNet neuralNet) {
-    	neuralNet.init();
-		this.neuralNet = neuralNet;
-	}
-    
-    public NeuralNet getNeuralNet() {
-    	return neuralNet;
-    }
-    
-    public void setTrainingDataSet(NeuralDataSet trainingDataSet) {
-		this.trainingDataSet = trainingDataSet;
-	}
-    
-    public NeuralDataSet getTrainingDataSet() {
-		return trainingDataSet;
-	}
-    
-    public NeuralDataSet getTestingDataSet() {
-		return testingDataSet;
-	}
-    
-    public void setTestingDataSet(NeuralDataSet testingDataSet) {
-		this.testingDataSet = testingDataSet;
-	}
-    
 }

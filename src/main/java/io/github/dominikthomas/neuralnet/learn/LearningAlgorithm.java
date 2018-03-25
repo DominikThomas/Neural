@@ -113,4 +113,8 @@ public abstract class LearningAlgorithm {
     	this.testingDataSet=_testingDataSet;
     }
     
+    public NeuralDataSet getTestingDataSet() {
+		return testingDataSet;
+	}
+    
 }

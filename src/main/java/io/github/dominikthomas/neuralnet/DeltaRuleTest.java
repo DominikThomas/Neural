@@ -9,13 +9,13 @@ import io.github.dominikthomas.neuralnet.learn.DeltaRule;
 import io.github.dominikthomas.neuralnet.math.RandomNumberGenerator;
 
 public class DeltaRuleTest {
-	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
  
 		// loading the definitions from the given XML file
+		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"deltaruletest/applicationContext.xml");
 
