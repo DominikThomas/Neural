@@ -15,7 +15,7 @@ public class RandomNumberGenerator {
     /**
      * Seed that is used for random number generation
      */
-    private static long seed=0;
+    private static long seed=System.currentTimeMillis();
     /**
      * Random singleton object that actually generates the random numbers
      */
