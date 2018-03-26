@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package io.github.dominikthomas.neuralnet.data;
 
 import io.github.dominikthomas.neuralnet.beans.NeuralNet;
 import java.util.ArrayList;
 
-/**
- *
- * @author fab
- */
 public class NeuralOutputData {
     
     public int numberOfOutputs=0;

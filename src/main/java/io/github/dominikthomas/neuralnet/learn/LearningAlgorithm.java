@@ -4,10 +4,6 @@ import io.github.dominikthomas.neuralnet.beans.NeuralException;
 import io.github.dominikthomas.neuralnet.beans.NeuralNet;
 import io.github.dominikthomas.neuralnet.data.NeuralDataSet;
 
-/**
- *
- * @author fab
- */
 public abstract class LearningAlgorithm {
     
     protected NeuralNet neuralNet;

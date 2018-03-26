@@ -23,15 +23,15 @@ public class Hebbian extends LearningAlgorithm {
     	getTrainingDataSet().init();
     	this.learningParadigm=LearningParadigm.UNSUPERVISED;
         this.newWeights=new ArrayList<>();
-        int numberOfHiddenLayers=super.neuralNet.getNumberOfHiddenLayers();
+        int numberOfHiddenLayers=neuralNet.getNumberOfHiddenLayers();
         for(int l=0;l<=numberOfHiddenLayers;l++){
             int numberOfNeuronsInLayer,numberOfInputsInNeuron;
             this.newWeights.add(new ArrayList<ArrayList<Double>>());
             if(l<numberOfHiddenLayers){
-                numberOfNeuronsInLayer=super.neuralNet.getHiddenLayer(l)
+                numberOfNeuronsInLayer=neuralNet.getHiddenLayer(l)
                         .getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
-                    numberOfInputsInNeuron=super.neuralNet.getHiddenLayer(l)
+                    numberOfInputsInNeuron=neuralNet.getHiddenLayer(l)
                             .getNeuron(j).getNumberOfInputs();
                     this.newWeights.get(l).add(new ArrayList<Double>());
                     for(int i=0;i<=numberOfInputsInNeuron;i++){
@@ -40,10 +40,10 @@ public class Hebbian extends LearningAlgorithm {
                 }
             }
             else{
-                numberOfNeuronsInLayer=super.neuralNet.getOutputLayer()
+                numberOfNeuronsInLayer=neuralNet.getOutputLayer()
                         .getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
-                    numberOfInputsInNeuron=super.neuralNet.getOutputLayer()
+                    numberOfInputsInNeuron=neuralNet.getOutputLayer()
                             .getNeuron(j).getNumberOfInputs();
                     this.newWeights.get(l).add(new ArrayList<Double>());
                     for(int i=0;i<=numberOfInputsInNeuron;i++){
@@ -68,18 +68,18 @@ public class Hebbian extends LearningAlgorithm {
                 case BATCH:
                     ArrayList<Double> _ithInput;
                     if(input<currNeuron.getNumberOfInputs()){
-                        _ithInput=super.trainingDataSet.getIthInputArrayList(input);
+                        _ithInput=trainingDataSet.getIthInputArrayList(input);
                     }
                     else{
                         _ithInput=new ArrayList<>();
-                        for(int i=0;i<super.trainingDataSet.numberOfRecords;i++){
+                        for(int i=0;i<trainingDataSet.numberOfRecords;i++){
                             _ithInput.add(0.0);
                         }
                     }
                     Double multResultIthInput=0.0;
-                    for(int i=0;i<super.trainingDataSet.numberOfRecords;i++){
+                    for(int i=0;i<trainingDataSet.numberOfRecords;i++){
                         multResultIthInput+=
-                                super.trainingDataSet.getArrayNeuralOutputRecord(i).get(neuron)
+                                trainingDataSet.getArrayNeuralOutputRecord(i).get(neuron)
                                 *_ithInput.get(i);
                     }
                     deltaWeight*=multResultIthInput;
@@ -157,10 +157,10 @@ public class Hebbian extends LearningAlgorithm {
                         }   
                         applyNewWeights();
                         currentRecord=++k;
-                        if(k>=super.trainingDataSet.numberOfRecords){
+                        if(k>=trainingDataSet.numberOfRecords){
                             k=0;
                             setLastOutputMean();
-                            currentOutputMean=super.trainingDataSet.getMeanNeuralOutput();
+                            currentOutputMean=trainingDataSet.getMeanNeuralOutput();
                             currentRecord=0;
                             epoch++;
                         }
@@ -177,11 +177,11 @@ public class Hebbian extends LearningAlgorithm {
     }
     
     public void applyNewWeights(){
-        int numberOfHiddenLayers=super.neuralNet.getNumberOfHiddenLayers();
+        int numberOfHiddenLayers=neuralNet.getNumberOfHiddenLayers();
         for(int l=0;l<=numberOfHiddenLayers;l++){
             int numberOfNeuronsInLayer,numberOfInputsInNeuron;
             if(l<numberOfHiddenLayers){
-                HiddenLayer hl = super.neuralNet.getHiddenLayer(l);
+                HiddenLayer hl = neuralNet.getHiddenLayer(l);
                 numberOfNeuronsInLayer=hl.getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
                     numberOfInputsInNeuron=hl.getNeuron(j).getNumberOfInputs();
@@ -192,7 +192,7 @@ public class Hebbian extends LearningAlgorithm {
                 }
             }
             else{
-                OutputLayer ol = super.neuralNet.getOutputLayer();
+                OutputLayer ol = neuralNet.getOutputLayer();
                 numberOfNeuronsInLayer=ol.getNumberOfNeuronsInLayer();
                 for(int j=0;j<numberOfNeuronsInLayer;j++){
                     numberOfInputsInNeuron=ol.getNeuron(j).getNumberOfInputs();
@@ -213,9 +213,9 @@ public class Hebbian extends LearningAlgorithm {
                     + "single layer neural network");
         }
         else{
-            neuralNet.setInputs(super.trainingDataSet.getArrayInputRecord(i));
+            neuralNet.setInputs(trainingDataSet.getArrayInputRecord(i));
             neuralNet.calc();
-            super.trainingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
+            trainingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
 
             //simpleError=simpleErrorEach.get(i);
         }
@@ -228,13 +228,13 @@ public class Hebbian extends LearningAlgorithm {
                     + "single layer neural network");
         }
         else{
-            for(int i=0;i<super.trainingDataSet.numberOfRecords;i++){
-                neuralNet.setInputs(super.trainingDataSet.getInputRecord(i));
+            for(int i=0;i<trainingDataSet.numberOfRecords;i++){
+                neuralNet.setInputs(trainingDataSet.getInputRecord(i));
                 neuralNet.calc();
-                super.trainingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
+                trainingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
             }
-            currentOutputMean=super.trainingDataSet.getMeanNeuralOutput();
-            //simpleError=simpleErrorEach.get(super.trainingDataSet.numberOfRecords-1);
+            currentOutputMean=trainingDataSet.getMeanNeuralOutput();
+            //simpleError=simpleErrorEach.get(trainingDataSet.numberOfRecords-1);
         }
     }
 
@@ -245,9 +245,9 @@ public class Hebbian extends LearningAlgorithm {
                     + "single layer neural network");
         }
         else{
-            neuralNet.setInputs(super.testingDataSet.getArrayInputRecord(i));
+            neuralNet.setInputs(testingDataSet.getArrayInputRecord(i));
             neuralNet.calc();
-            super.testingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
+            testingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
 
             //simpleError=simpleErrorEach.get(i);
         }
@@ -260,13 +260,13 @@ public class Hebbian extends LearningAlgorithm {
                     + "single layer neural network");
         }
         else{
-            for(int i=0;i<super.testingDataSet.numberOfRecords;i++){
-                neuralNet.setInputs(super.testingDataSet.getInputRecord(i));
+            for(int i=0;i<testingDataSet.numberOfRecords;i++){
+                neuralNet.setInputs(testingDataSet.getInputRecord(i));
                 neuralNet.calc();
-                super.testingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
+                testingDataSet.setNeuralOutput(i, neuralNet.getOutputs());
             }
-            //currentOutputMean=super.trainingDataSet.getMeanNeuralOutput();
-            //simpleError=simpleErrorEach.get(super.trainingDataSet.numberOfRecords-1);
+            //currentOutputMean=trainingDataSet.getMeanNeuralOutput();
+            //simpleError=simpleErrorEach.get(trainingDataSet.numberOfRecords-1);
         }
     }
 
