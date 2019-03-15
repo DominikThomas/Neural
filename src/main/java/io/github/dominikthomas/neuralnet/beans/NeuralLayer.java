@@ -233,6 +233,8 @@ public abstract class NeuralLayer {
     
     public void setNumberOfNeurons(Integer numberOfNeurons) {
 		this.numberOfNeuronsInLayer = numberOfNeurons;
+		neuron = new ArrayList<>(numberOfNeurons);
+        output = new ArrayList<>(numberOfNeurons);
 	}
     
     public void setActivationFunction(IActivationFunction activationFunction) {
