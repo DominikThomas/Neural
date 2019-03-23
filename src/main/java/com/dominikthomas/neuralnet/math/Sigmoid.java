@@ -1,12 +1,10 @@
 package com.dominikthomas.neuralnet.math;
 
 /**
- *
- * Sigmoide
  * This class represents the sigmoid activation function, implementing the
  * interface IActivationFunction
  * 
- * @author Alan de Souza, Fábio Soares
+ * @author Alan de Souza, Fabio Soares
  * @version 0.1
  */
 public class Sigmoid implements IActivationFunction {
@@ -21,8 +19,15 @@ public class Sigmoid implements IActivationFunction {
     public Sigmoid(){
         
     }
+    
     /**
-     * setA
+     * Sigmoid constructor
+     * @param value new coefficient for the sigmoid function
+     */
+    public Sigmoid(double value){
+        this.setA(value);
+    }
+    /**
      * Sets a new coefficient for the sigmoid constructor
      * @param value 
      */
@@ -31,12 +36,23 @@ public class Sigmoid implements IActivationFunction {
     }
     
     /**
-     * calc
-     * Performs the calculation of this function
-     * @param x
-     * @return Returns the result of this function
+     * Calculates and returns the result of the sigmoid function
+     * @param input value 
+     * @return result of the sigmoid function
      */
+    @Override
     public double calc(double x){
         return 1.0/(1.0+Math.exp(-a*x));
     }
+    
+    /**
+     * Calculates and returns the derivative value of the sigmoid function
+     * @param input value 
+     * @return derivative of the sigmoid function
+     */
+    @Override 
+    public double derivative(double x){
+        return calc(x)*(1-calc(x));
+    }
+    
 }

@@ -1,12 +1,10 @@
 package com.dominikthomas.neuralnet.math;
 
 /**
- *
- * Linear
  * This class represents the pure linear activation function, implementing the
  * interface IActivationFunction
  * 
- * @author Alan de Souza, Fábio Soares
+ * @author Alan de Souza, Fabio Soares
  * @version 0.1
  */
 public class Linear implements IActivationFunction {
@@ -32,8 +30,7 @@ public class Linear implements IActivationFunction {
     }
     
     /** 
-     * setA
-     * Sets a new coefficient for the Linear function
+     * Sets a new coefficient for the linear function
      * @param value new coefficient for the linear function
      */
     public void setA(double value){
@@ -41,13 +38,23 @@ public class Linear implements IActivationFunction {
     }
     
     /**
-     * calc
-     * Performs the calculation of this function
-     * @param x
-     * @return Returns the result of this function
+     * Calculates and returns the result of the linear function
+     * @param input value 
+     * @return result of the linear function
      */
+    @Override
     public double calc(double x){
         return a*x;
+    }
+    
+    /**
+     * Calculates and returns the derivative value of the linear function
+     * @param input value 
+     * @return derivative of the linear function
+     */
+    @Override 
+    public double derivative(double x){
+        return a;
     }
     
 }
