@@ -6,7 +6,6 @@ import org.springframework.util.StopWatch;
 
 import io.github.dominikthomas.neuralnet.beans.NeuralException;
 import io.github.dominikthomas.neuralnet.learn.DeltaRule;
-import io.github.dominikthomas.neuralnet.math.RandomNumberGenerator;
 
 public class AndTest {
 	public static void main(String[] args) {

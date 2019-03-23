@@ -27,9 +27,9 @@ public class DeltaRule extends LearningAlgorithm {
     public ErrorMeasurement generalErrorMeasurement=ErrorMeasurement.SquareError;
     public ErrorMeasurement overallErrorMeasurement=ErrorMeasurement.MSE;
     
-    private int currentRecord=0;
+    protected int currentRecord=0;
     
-    private ArrayList<ArrayList<ArrayList<Double>>> newWeights;
+    protected ArrayList<ArrayList<ArrayList<Double>>> newWeights;
     
     public DeltaRule() {
     	

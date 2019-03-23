@@ -109,7 +109,7 @@ public abstract class NeuralLayer {
      * getNextLayer
      * @return Returns the reference to the next layer
      */
-    protected NeuralLayer getNextLayer(){
+    public NeuralLayer getNextLayer(){
         return nextLayer;
     }
     
@@ -233,8 +233,8 @@ public abstract class NeuralLayer {
     
     public void setNumberOfNeurons(Integer numberOfNeurons) {
 		this.numberOfNeuronsInLayer = numberOfNeurons;
-		neuron = new ArrayList<>(numberOfNeurons);
-        output = new ArrayList<>(numberOfNeurons);
+		this.neuron = new ArrayList<>(numberOfNeurons);
+		this.output = new ArrayList<>(numberOfNeurons);
 	}
     
     public void setActivationFunction(IActivationFunction activationFunction) {

@@ -1,7 +1,8 @@
 package io.github.dominikthomas.neuralnet.beans;
 
 import java.util.ArrayList;
-
+import io.github.dominikthomas.neuralnet.init.UniformInitialization;
+import io.github.dominikthomas.neuralnet.init.WeightInitialization;
 import io.github.dominikthomas.neuralnet.math.IActivationFunction;
 
 /**
@@ -56,6 +57,13 @@ public class NeuralNet {
     
     private boolean activeBias=true;
     
+    private WeightInitialization weightInitialization
+    =new UniformInitialization(0.0,1.0);
+    
+    public enum NeuralNetMode { BUILD, TRAINING, RUN };
+    
+    private NeuralNetMode neuralNetMode = NeuralNetMode.BUILD;
+    
     /**
      * NeuralNet constructor
      * This constructor initializes the neural network by initializing all of 
@@ -89,6 +97,7 @@ public class NeuralNet {
                     hiddenLayers.get(i).setNumberOfInputs(hiddenLayers.get(i-1).getNumberOfNeuronsInLayer());
                     hiddenLayers.get(i-1).setNextLayer(hiddenLayers.get(i));
                 }
+	            hiddenLayers.get(i).init();
             }
             outputLayer=new OutputLayer(numberOfOutputs,outputAcFnc,
                     hiddenLayers.get(numberOfHiddenLayers-1)
@@ -180,6 +189,24 @@ public class NeuralNet {
         return _outputs;
     }
     
+    /**
+     * print
+     * Method to print the neural network information
+     */
+    public void print(){
+        System.out.println("Neural Network: "+this.toString());
+        System.out.println("\tInputs:"+String.valueOf(this.numberOfInputs));
+        System.out.println("\tOutputs:"+String.valueOf(this.numberOfOutputs));
+        System.out.println("\tHidden Layers: "+String.valueOf(numberOfHiddenLayers));
+        for(int i=0;i<numberOfHiddenLayers;i++){
+            System.out.println("\t\tHidden Layer "+
+                    String.valueOf(i)+": "+
+                    String.valueOf(this.hiddenLayers.get(i)
+                            .numberOfNeuronsInLayer)+" Neurons");
+        }
+        
+    }
+    
     public void deactivateBias(){
         if(numberOfHiddenLayers>0){
             for(HiddenLayer hl:hiddenLayers){
@@ -246,6 +273,10 @@ public class NeuralNet {
         return result;
     }
     
+    public WeightInitialization getWeightInitialization(){
+        return weightInitialization;
+    }
+    
     public void setNumberOfInputs(int numberOfInputs) {
 		this.numberOfInputs = numberOfInputs;
 	}
@@ -261,4 +292,14 @@ public class NeuralNet {
     public void setHiddenLayers(ArrayList<HiddenLayer> hiddenLayers) {
 		this.hiddenLayers = hiddenLayers;
 	}
+
+    public void setNeuralNetMode(NeuralNetMode neuralNetMode) {
+		this.neuralNetMode = neuralNetMode;
+	}
+    
+    public void setWeightInitialization(WeightInitialization weightInitialization) {
+		this.weightInitialization = weightInitialization;
+	}
+    
+    
 }

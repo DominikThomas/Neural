@@ -1,0 +1,139 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+
+	<import resource="../neuralnetspring/activationFunctions.xml" />
+
+	<bean id="backpropagation" class="io.github.dominikthomas.neuralnet.learn.Backpropagation">
+		<property name="neuralNet" ref="neuralNet" />
+		<property name="learningMode" value="BATCH" />
+		<property name="printTraining" value="true" />
+		<property name="learningRate" value="0.2" />
+		<property name="maxEpochs" value="20000" />
+		<property name="generalErrorMeasurement" value="SimpleError" />
+		<property name="overallErrorMeasurement" value="MSE" />
+		<property name="minOverallError" value="0.0001" />
+		<property name="momentumRate" value="0.7"/>
+		<property name="trainingDataSet" ref="trainingDataSet" />
+		<property name="testingDataSet" ref="testingDataSet" />
+	</bean>
+
+	<bean id="neuralNet" class="io.github.dominikthomas.neuralnet.beans.NeuralNet">
+		<property name="numberOfInputs" value="3" />
+		<property name="numberOfOutputs" value="4" />
+		<property name="outputAcFnc" ref="linear1" />
+		<property name="hiddenLayers">
+			<list value-type="io.github.dominikthomas.neuralnet.HiddenLayer">
+				<ref bean="layer0"/>
+				<ref bean="layer1"/>
+				<ref bean="layer2"/>
+			</list>
+		</property>
+		<property name="weightInitialization" ref="uniformInitialization" />
+	</bean>
+	
+		<bean id="linear1" class="io.github.dominikthomas.neuralnet.math.Linear" parent="linear">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="layer0" class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
+		<property name="numberOfNeurons" value="4" />
+		<property name="activationFunction" ref="hl0Fnc" />
+	</bean>
+	
+	<bean id="layer1" class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
+		<property name="numberOfNeurons" value="3" />
+		<property name="activationFunction" ref="hl1Fnc" />
+	</bean>
+	
+	<bean id="layer2" class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
+		<property name="numberOfNeurons" value="5" />
+		<property name="activationFunction" ref="hl2Fnc" />
+	</bean>
+	
+	<bean id="hl0Fnc" class="io.github.dominikthomas.neuralnet.math.Sigmoid" parent="linear">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="hl1Fnc" class="io.github.dominikthomas.neuralnet.math.Sigmoid" parent="linear">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="hl2Fnc" class="io.github.dominikthomas.neuralnet.math.Sigmoid" parent="linear">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="uniformInitialization" class="io.github.dominikthomas.neuralnet.init.UniformInitialization">
+		<constructor-arg index="0" value="-1.0"/>
+		<constructor-arg index="1" value="1.0"/>
+	</bean>
+
+	<bean id="trainingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet">
+		<property name="inputData" ref="trainingInputData" />
+		<property name="outputData" ref="trainingOutputData" />
+	</bean>
+
+	<bean id="testingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet">
+		<property name="inputData" ref="testingInputData" />
+		<property name="outputData" ref="testingOutputData" />
+	</bean>
+	
+	<bean id="trainingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData">
+		<property name="data" ref="trainingInputArray" />
+	</bean>
+
+	<bean id="trainingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData">
+		<property name="targetData" ref="trainingTargetArray" />
+	</bean>
+	
+	<util:list id="trainingInputArray">
+		<list><value>-1.0</value><value>-1.0</value><value>-1.0</value></list>
+		<list><value>-1.0</value><value>-1.0</value><value>1.0</value></list>
+		<list><value>-1.0</value><value>1.0</value><value>-1.0</value></list>
+		<list><value>-1.0</value><value>1.0</value><value>1.0</value></list>
+		<list><value>1.0</value><value>-1.0</value><value>-1.0</value></list>
+		<list><value>1.0</value><value>-1.0</value><value>1.0</value></list>
+		<list><value>1.0</value><value>1.0</value><value>-1.0</value></list>
+		<list><value>1.0</value><value>1.0</value><value>1.0</value></list>
+	</util:list>
+	
+	<util:list id="trainingTargetArray">
+		<list><value>-1.0</value><value>1.0</value><value>-3.0</value><value>1.0</value></list>
+		<list><value>1.0</value><value>-1.0</value><value>-1.0</value><value>-1.0</value></list>
+		<list><value>1.0</value><value>-1.0</value><value>-1.0</value><value>-1.0</value></list>
+		<list><value>-1.0</value><value>-1.0</value><value>1.0</value><value>-3.0</value></list>
+		<list><value>1.0</value><value>-1.0</value><value>-1.0</value><value>3.0</value></list>
+		<list><value>-1.0</value><value>-1.0</value><value>1.0</value><value>1.0</value></list>
+		<list><value>-1.0</value><value>1.0</value><value>1.0</value><value>1.0</value></list>
+		<list><value>1.0</value><value>-1.0</value><value>3.0</value><value>-1.0</value></list>
+	</util:list>
+	
+	<bean id="testingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData">
+		<property name="data" ref="testingInputArray" />
+	</bean>
+
+	<bean id="testingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData">
+		<property name="targetData" ref="testingTargetArray" />
+	</bean>
+	
+	<util:list id="testingInputArray">
+		<list><value>-1.7</value></list>
+		<list><value>-1.0</value></list>
+		<list><value>0.0</value></list>
+		<list><value>0.8</value></list>
+		<list><value>2.0</value></list>
+	</util:list>
+	
+	<util:list id="testingTargetArray">
+		<list><value>#{T(io.github.dominikthomas.neuralnet.DeltaRuleTest).fncTest(testingInputArray[0])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.DeltaRuleTest).fncTest(testingInputArray[1])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.DeltaRuleTest).fncTest(testingInputArray[2])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.DeltaRuleTest).fncTest(testingInputArray[3])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.DeltaRuleTest).fncTest(testingInputArray[4])}</value></list>
+	</util:list>
+	
+</beans>

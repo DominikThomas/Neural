@@ -15,7 +15,7 @@ public class RandomNumberGenerator {
     /**
      * Seed that is used for random number generation
      */
-    private static long seed=System.currentTimeMillis();
+    public static long seed=System.currentTimeMillis();
     /**
      * Random singleton object that actually generates the random numbers
      */
@@ -39,5 +39,13 @@ public class RandomNumberGenerator {
     public static void setSeed(long newSeed){
         seed=newSeed;
         r.setSeed(newSeed);
+    }
+
+    public static double GenerateBetween(double min,double max){
+        if(r==null)
+            r=new Random(seed);
+        if(max<min)
+           return min;
+        return min+(r.nextDouble()*(max-min));
     }
 }
