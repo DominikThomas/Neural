@@ -1,7 +1,5 @@
 package io.github.dominikthomas.neuralnet.beans;
 
-import io.github.dominikthomas.neuralnet.math.IActivationFunction;
-
 /**
  *
  * This class extends from NeuralLayer and represents a hidden layer in a Neural 
@@ -13,16 +11,6 @@ import io.github.dominikthomas.neuralnet.math.IActivationFunction;
  */
 public class HiddenLayer extends NeuralLayer {
     
-    /**
-     * HiddenLayer init
-     * 
-     * @param numberofinputs Number of inputs in this layer
-     * @see HiddenLayer
-     */
-    public void init(int numberofinputs){
-    	numberOfInputs=numberofinputs;
-		super.init();
-    }    
     public HiddenLayer() {
     }    
     

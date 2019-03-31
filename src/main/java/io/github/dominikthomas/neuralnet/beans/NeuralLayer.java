@@ -85,11 +85,18 @@ public abstract class NeuralLayer {
         output = new ArrayList<>(numberofneurons);
     }
     
-    protected void init() {
+    /**
+     * NeuralLayer init
+     * 
+     * @param numberofinputs Number of inputs in this layer
+     * @see NeuralLayer
+     */
+    public void init(int numberofinputs){
+    	numberOfInputs=numberofinputs;
     	neuron = new ArrayList<>(numberOfNeuronsInLayer);
-        output = new ArrayList<>(numberOfNeuronsInLayer);
-        this.init(neuralNet.getWeightInitialization());
-	}
+    	output = new ArrayList<>(numberOfNeuronsInLayer);
+    	this.init(neuralNet.getWeightInitialization());
+    }    
     
     public NeuralLayer() {
     }
