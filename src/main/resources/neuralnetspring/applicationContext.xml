@@ -9,11 +9,11 @@
 						
  	<import resource="../neuralnet/activationFunctions.xml"/> 
 	<bean id="neuralNet"
-		class="com.dominikthomas.neuralnet.beans.NeuralNet" init-method="init">
+		class="io.github.dominikthomas.neuralnet.beans.NeuralNet" init-method="init">
 		<property name="numberOfInputs" value="2" />
 		<property name="numberOfOutputs" value="1" />
 		<property name="hiddenLayers">
-			<list value-type="com.dominikthomas.neuralnet.HiddenLayer">
+			<list value-type="io.github.dominikthomas.neuralnet.HiddenLayer">
 				<ref bean="layer1"/>
 				<ref bean="layer2"/>
 			</list>
@@ -22,14 +22,14 @@
 	</bean>
 	
 	<bean id="layer1"
-		class="com.dominikthomas.neuralnet.beans.HiddenLayer" >
+		class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
 		<property name="numberOfNeuronsInLayer" value="10" />
 		<property name="activationFunction" ref="linear" />
 		<property name="neuralNet" ref="neuralNet" />
 	</bean>
 	
 	<bean id="layer2"
-		class="com.dominikthomas.neuralnet.beans.HiddenLayer" >
+		class="io.github.dominikthomas.neuralnet.beans.HiddenLayer" >
 		<property name="numberOfNeuronsInLayer" value="3" />
 		<property name="activationFunction" ref="sigmoid" />
 		<property name="neuralNet" ref="neuralNet" />
