@@ -3,7 +3,6 @@ package io.github.dominikthomas.neuralnet.beans;
 import io.github.dominikthomas.neuralnet.data.NeuralDataSet;
 import io.github.dominikthomas.neuralnet.init.UniformInitialization;
 import io.github.dominikthomas.neuralnet.init.WeightInitialization;
-import io.github.dominikthomas.neuralnet.math.IActivationFunction;
 
 import java.util.ArrayList;
 
@@ -13,8 +12,8 @@ import java.util.ArrayList;
  * definitions that a Neural Network has, including method for calculation 
  * (forward).
  * 
- * @author Alan de Souza, Fabio Soares
- * @version 0.1
+ * @author Alan de Souza, Fabio Soares, Dominik Thomas
+ * @version 0.2
  */
 public class NeuralNet {
     
@@ -30,10 +29,6 @@ public class NeuralNet {
      * Neural Network Output Layer
      */
     protected OutputLayer outputLayer;
-    /**
-     * Output Activation function
-     */
-    private IActivationFunction outputAcFnc;
     /**
      * Number of Hidden Layers
      */
@@ -95,6 +90,7 @@ public class NeuralNet {
     	if(hiddenLayers != null) { 
     		numberOfHiddenLayers=hiddenLayers.size();
     	}
+    	numberOfOutputs=outputLayer.getNumberOfNeuronsInLayer();
         neuronsInHiddenLayers = new int[numberOfHiddenLayers+1];
         indexesWeightPerLayer = new int[numberOfHiddenLayers+2];  
         for(int i=0;i<=numberOfHiddenLayers;i++){
@@ -139,15 +135,11 @@ public class NeuralNet {
             }
         }
         if(numberOfHiddenLayers>0){
-            outputLayer=new OutputLayer(this,numberOfOutputs,outputAcFnc,
-                    hiddenLayers.get(numberOfHiddenLayers-1)
-                    .getNumberOfNeuronsInLayer() 
-                    );
+            outputLayer.init(hiddenLayers.get(numberOfHiddenLayers-1).getNumberOfNeuronsInLayer() );
             hiddenLayers.get(numberOfHiddenLayers-1).setNextLayer(outputLayer);
         }
         else{
-            outputLayer=new OutputLayer(this,numberOfOutputs, outputAcFnc,
-                    numberOfInputs);
+            outputLayer.init(numberOfInputs);
             inputLayer.setNextLayer(outputLayer);
         }
         setNeuralNetMode(NeuralNetMode.RUN);
@@ -296,14 +288,6 @@ public class NeuralNet {
      */
     public int getNumberOfInputs(){
         return numberOfInputs;
-    }
-    
-    /**
-     * Gets number of outputs
-     * @return number of outputs  
-     */
-    public int getNumberOfOutputs(){
-        return numberOfOutputs;
     }
     
     /**
@@ -461,14 +445,6 @@ public class NeuralNet {
 		this.numberOfInputs = numberOfInputs;
 	}
     
-    public void setNumberOfOutputs(int numberOfOutputs) {
-		this.numberOfOutputs = numberOfOutputs;
-	}
-    
-    public void setOutputAcFnc(IActivationFunction outputAcFnc) {
-		this.outputAcFnc = outputAcFnc;
-	}
-    
     public void setWeightInitialization(WeightInitialization weightInitialization) {
 		this.weightInitialization = weightInitialization;
 	}
@@ -476,5 +452,8 @@ public class NeuralNet {
 		this.hiddenLayers = hiddenLayers;
 	}
     
+    public void setOutputLayer(OutputLayer outputLayer) {
+		this.outputLayer = outputLayer;
+	}
     
 }

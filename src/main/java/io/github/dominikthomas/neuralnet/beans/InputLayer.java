@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * This class extends from NeuralLayer and represents the input layer of the 
  * Neural Network
  * 
- * @author Alan de Souza, Fabio Soares
- * @version 0.1
+ * @author Alan de Souza, Fabio Soares, Dominik Thomas
+ * @version 0.2
  */
 public class InputLayer extends NeuralLayer {
     

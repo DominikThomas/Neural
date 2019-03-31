@@ -5,8 +5,8 @@ package io.github.dominikthomas.neuralnet.beans;
  * This class extends from NeuralLayer and represents a hidden layer in a Neural 
  * Network
  * 
- * @authors Alan de Souza, Fabio Soares 
- * @version 0.1
+ * @authors Alan de Souza, Fabio Soares, Dominik Thomas 
+ * @version 0.2
  * 
  */
 public class HiddenLayer extends NeuralLayer {

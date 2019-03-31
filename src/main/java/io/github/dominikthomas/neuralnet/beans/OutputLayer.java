@@ -1,46 +1,17 @@
 package io.github.dominikthomas.neuralnet.beans;
 
-import io.github.dominikthomas.neuralnet.math.IActivationFunction;
-
 /**
  *
  * This class represents an output layer of a neural network, inheriting from 
  * NeuralLayer, which contains all basic definitions of a Neural Layer
  * 
- * @author Alan de Souza, Fabio Soares
- * @version 0.1
+ * @author Alan de Souza, Fabio Soares, Dominik Thomas
+ * @version 0.2
  */
 public class OutputLayer extends NeuralLayer {
     
-    /**
-     * OutputLayer constructor
-     * @param numberofneurons Number of Neurons (and also the outputs) of this layer
-     * @param numberofinputs Number of Inputs of this layer
-     * @param iaf Activation Function of this layer
-     * @param _neuralNet 
-     */
-    public OutputLayer(NeuralNet _neuralNet,int numberofneurons
-            ,IActivationFunction iaf,int numberofinputs){
-        super(_neuralNet,numberofneurons,iaf);
-        numberOfInputs=numberofinputs;
-        nextLayer=null;
-        init(_neuralNet.getWeightInitialization());
-    }
-    
-    /**
-     * OutputLayer constructor
-     * @param numberofneurons Number of Neurons (and also the outputs) of this layer
-     * @param numberofinputs Number of Inputs of this layer
-     * @param iaf Activation Function of this layer
-     * @param previous neural net layer 
-     */
-    public OutputLayer(NeuralNet _neuralNet,int numberofneurons
-            ,IActivationFunction iaf,NeuralLayer _previousLayer){
-        super(_neuralNet,numberofneurons,iaf);
-        setPreviousLayer(_previousLayer);
-        numberOfInputs=_previousLayer.getNumberOfNeuronsInLayer();
-        init(_neuralNet.getWeightInitialization());
-    }
+    public OutputLayer() {
+	}
     
     /**
      * This method prevents any attempt to link this layer to a next one, 
