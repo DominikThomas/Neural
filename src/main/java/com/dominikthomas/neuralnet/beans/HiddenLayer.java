@@ -14,20 +14,17 @@ import com.dominikthomas.neuralnet.math.IActivationFunction;
 public class HiddenLayer extends NeuralLayer {
     
     /**
-     * HiddenLayer constructor
+     * HiddenLayer init
      * 
-     * @param numberofneurons Number of neurons in this hidden layer
-     * @param iaf Activation Function for all neurons in this layer
      * @param numberofinputs Number of inputs in this layer
-     * @param _neuralNet
      * @see HiddenLayer
      */
-    public HiddenLayer(NeuralNet _neuralNet, int numberofneurons
-            ,IActivationFunction iaf,int numberofinputs){
-        super(_neuralNet,numberofneurons,iaf);
-        numberOfInputs=numberofinputs;
-        this.init(_neuralNet.getWeightInitialization());
-    }
+    public void init(int numberofinputs){
+    	numberOfInputs=numberofinputs;
+		super.init();
+    }    
+    public HiddenLayer() {
+    }    
     
     /**
      * This method links this layer to a previous layer in the Neural Network

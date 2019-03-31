@@ -1,4 +1,4 @@
-package com.dominikthomas.neuralnet;
+package com.dominikthomas.neuralnet.test;
 
 import java.util.Arrays;
 
@@ -20,22 +20,15 @@ public class NeuralNetSpring {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
  
+		RandomNumberGenerator.setSeed(2);
+		
 		// loading the definitions from the given XML file
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"neuralnet/applicationContext.xml");
+				"neuralnetspring/applicationContext.xml");
  
 		NeuralNet nn = (NeuralNet) context
 				.getBean("neuralNet");
-        
-		try {
-			nn.init();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-        RandomNumberGenerator.setSeed(0);
-        
         double [] neuralInput = { 1.5 , 0.5 };
         
         double [] neuralOutput;
@@ -51,7 +44,6 @@ public class NeuralNetSpring {
         nn.calc();
         neuralOutput=nn.getOutputs();
         System.out.println(Arrays.toString(neuralOutput));
-
         
     }
 }

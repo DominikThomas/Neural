@@ -26,7 +26,7 @@ public abstract class NeuralLayer {
     /**
      * Activation Function of this Layer
      */
-    protected IActivationFunction activationFnc;
+    protected IActivationFunction activationFunction;
     
     /**
      * Previous Layer that feeds values to this Layer
@@ -79,9 +79,18 @@ public abstract class NeuralLayer {
             ,IActivationFunction iaf){
         this.neuralNet=_neuralNet;
         this.numberOfNeuronsInLayer=numberofneurons;
-        this.activationFnc=iaf;
+        this.activationFunction=iaf;
         neuron = new ArrayList<>(numberofneurons);
         output = new ArrayList<>(numberofneurons);
+    }
+    
+    protected void init() {
+    	neuron = new ArrayList<>(numberOfNeuronsInLayer);
+        output = new ArrayList<>(numberOfNeuronsInLayer);
+        this.init(neuralNet.getWeightInitialization());
+	}
+    
+    public NeuralLayer() {
     }
     
     /**
@@ -142,12 +151,12 @@ public abstract class NeuralLayer {
         if(numberOfNeuronsInLayer>=0){
             for(int i=0;i<numberOfNeuronsInLayer;i++){
                 try{
-                    neuron.get(i).setActivationFunction(activationFnc);
+                    neuron.get(i).setActivationFunction(activationFunction);
                     neuron.get(i).setNeuralLayer(this);
                     neuron.get(i).init(weightInitialization);
                 }
                 catch(IndexOutOfBoundsException iobe){
-                    neuron.add(new Neuron(numberOfInputs,activationFnc));
+                    neuron.add(new Neuron(numberOfInputs,activationFunction));
                     neuron.get(i).setNeuralLayer(this);
                     neuron.get(i).init(weightInitialization);
                 }
@@ -281,5 +290,21 @@ public abstract class NeuralLayer {
         else
             return false;
     }
+    
+    public void setNumberOfNeuronsInLayer(int numberOfNeuronsInLayer) {
+		this.numberOfNeuronsInLayer = numberOfNeuronsInLayer;
+	}
+    
+    public void setActivationFunction(IActivationFunction activationFunction) {
+		this.activationFunction = activationFunction;
+	}
+    
+    public IActivationFunction getActivationFunction() {
+		return activationFunction;
+	}
+    
+    public void setNeuralNet(NeuralNet neuralNet) {
+		this.neuralNet = neuralNet;
+	}
     
 }

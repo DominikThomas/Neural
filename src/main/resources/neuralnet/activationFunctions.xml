@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+						
+	<bean id="sigmoid"
+		class="com.dominikthomas.neuralnet.math.Sigmoid">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="linear"
+		class="com.dominikthomas.neuralnet.math.Linear">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="hyperTan"
+		class="com.dominikthomas.neuralnet.math.HyperTan">
+		<property name="a" value="1.0" />
+	</bean>
+	
+	<bean id="step"
+		class="com.dominikthomas.neuralnet.math.Step">
+	</bean>
+</beans>
