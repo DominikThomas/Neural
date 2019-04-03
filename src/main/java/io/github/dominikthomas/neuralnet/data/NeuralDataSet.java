@@ -30,20 +30,15 @@ public class NeuralDataSet {
     public String[] outputNames;
     public String[] targetNames;
     
-    public NeuralDataSet(ArrayList<ArrayList<Double>> _data,int[] inputColumns,int[] outputColumns){
-        numberOfInputs=inputColumns.length;
-        numberOfOutputs=outputColumns.length;
-        numberOfRecords=_data.size();
-        ArrayList<ArrayList<Double>> _inputData=new ArrayList<>();
-        ArrayList<ArrayList<Double>> _outputData=new ArrayList<>();
-        for(int i=0;i<numberOfInputs;i++){
-            _inputData.add(_data.get(inputColumns[i]));
-        }
-        for(int i=0;i<numberOfOutputs;i++){
-            _outputData.add(_data.get(outputColumns[i]));
-        }
-        inputData=new NeuralInputData(_inputData);
-        outputData=new NeuralOutputData(_outputData);
+    public NeuralDataSet() {
+    }
+    
+    public void init() {
+    	inputData.init();
+    	outputData.init();
+	    numberOfInputs=inputData.numberOfInputs;
+	    numberOfOutputs=outputData.numberOfOutputs;
+	    numberOfRecords=inputData.data.size();
     }
     
     public NeuralDataSet(double[][] _data,int[] inputColumns,int[] outputColumns){
@@ -65,21 +60,6 @@ public class NeuralDataSet {
         inputData=new NeuralInputData(_inputData);
         outputData=new NeuralOutputData(_outputData);
         System.out.println("");
-    }
-    
-    public NeuralDataSet(double[][] _data,int numberOfOutputColumns){
-        numberOfInputs=_data[0].length;
-        numberOfOutputs=numberOfOutputColumns;
-        numberOfRecords=_data.length;
-        double[][] _inputData=new double[_data.length][];
-        for(int i=0;i<_data.length;i++){
-            _inputData[i]=new double[_data[i].length];
-            for(int j=0;j<_data[i].length;j++){
-                _inputData[i][j]=_data[i][j];
-            }
-        }
-        inputData=new NeuralInputData(_inputData);        
-        outputData=new NeuralOutputData(numberOfRecords,numberOfOutputs);
     }
     
     public ArrayList<ArrayList<Double>> getArrayInputData(){
@@ -290,6 +270,14 @@ public class NeuralDataSet {
     public DataNormalization getOutputNorm(){
         return outputNorm;
     }
+    
+    public void setInputData(NeuralInputData inputData) {
+		this.inputData = inputData;
+	}
+    
+    public void setOutputData(NeuralOutputData outputData) {
+		this.outputData = outputData;
+	}
     
     public static NeuralDataSet[] randomSeparateTrainTest(DataSet ds,int[] inputColumns,int[] outputColumns,double percTrain){
         int numTrain=new Double(Math.ceil(percTrain*ds.numberOfRecords)).intValue();

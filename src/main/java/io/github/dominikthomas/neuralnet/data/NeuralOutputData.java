@@ -31,22 +31,14 @@ public class NeuralOutputData {
     	
     }
     
-    public NeuralOutputData(int _numberOfOutputs){
-        this.numberOfOutputs=_numberOfOutputs;
-    }
-    
-    public NeuralOutputData(ArrayList<ArrayList<Double>> _data){
-        this.numberOfRecords=_data.size();
-        this.numberOfOutputs=_data.get(0).size();
-        this.targetData=_data;
-        this.neuralData=new ArrayList<>();
-        for(int i=0;i<numberOfRecords;i++){
-            this.neuralData.add(new ArrayList());
-            for(int j=0;j<numberOfOutputs;j++){
-                this.neuralData.get(i).add(null);
-            }
-        }
-    }
+    void init() {
+    	this.numberOfRecords=targetData.size();
+    	 for(int i=0;i<numberOfRecords;i++){
+             if(this.numberOfOutputs==0){
+                 this.numberOfOutputs=targetData.get(i).size();
+             }
+    	 }
+	}
     
     public NeuralOutputData(double[][] _data){
         this.numberOfRecords=_data.length;
@@ -63,19 +55,6 @@ public class NeuralOutputData {
                 this.neuralData.get(i).add(null);
             }
         }        
-    }
-    
-    public NeuralOutputData(int _numberOfRecords, int _numberOfOutputs){
-        this.numberOfRecords=_numberOfRecords;
-        this.numberOfOutputs=_numberOfOutputs;
-        this.targetData=null;
-        this.neuralData=new ArrayList<>();
-        for(int i=0;i<numberOfRecords;i++){
-            this.neuralData.add(new ArrayList<Double>());
-            for(int j=0;j<numberOfOutputs;j++){
-                this.neuralData.get(i).add(null);
-            }
-        }         
     }
     
     public ArrayList<ArrayList<Double>> getTargetDataArrayList(){
@@ -209,8 +188,14 @@ public class NeuralOutputData {
     }
     
     public void setNeuralData(int i,double[] _data){
+    	if(this.neuralData==null) {
+    		this.neuralData=new ArrayList<>();
+    	}
         for(int j=0;j<numberOfOutputs;j++){
-            this.neuralData.get(i).set(j, _data[j]);
+        	if(this.neuralData.size()<=i) {
+        		this.neuralData.add(new ArrayList<>());
+        	}
+            this.neuralData.get(i).add(_data[j]);
         }
     }
     
@@ -491,4 +476,9 @@ public class NeuralOutputData {
 		System.out.println("specificity: "+(specificity*100.0)+"%");
 		
 	}
+    
+    public void setTargetData(ArrayList<ArrayList<Double>> targetData) {
+		this.targetData = targetData;
+	}
+
 }

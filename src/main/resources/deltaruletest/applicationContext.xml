@@ -1,0 +1,99 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util.xsd
+						http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+
+	<import resource="../neuralnet/activationFunctions.xml"/>
+
+	<bean id="deltaRule" class="io.github.dominikthomas.neuralnet.learn.DeltaRule">
+		<property name="neuralNet" ref="neuralNet" />
+		<property name="learningMode" value="ONLINE" />
+		<property name="printTraining" value="true" />
+		<property name="learningRate" value="0.3" />
+		<property name="maxEpochs" value="1000" />
+		<property name="generalErrorMeasurement" value="SimpleError" />
+		<property name="overallErrorMeasurement" value="MSE" />
+		<property name="minOverallError" value="0.00001" />
+		<property name="trainingDataSet" ref="trainingDataSet" />
+		<property name="testingDataSet" ref="testingDataSet" />
+	</bean>
+
+	<bean id="neuralNet" class="io.github.dominikthomas.neuralnet.beans.NeuralNet">
+		<property name="numberOfInputs" value="1" />
+		<property name="outputLayer" ref="outputLayer" />
+	</bean>
+	
+	<bean id="outputLayer"
+		class="io.github.dominikthomas.neuralnet.beans.OutputLayer" >
+		<property name="numberOfNeuronsInLayer" value="1" />
+		<property name="activationFunction" ref="linear" />
+		<property name="neuralNet" ref="neuralNet" />
+	</bean>
+
+	<bean id="trainingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet">
+		<property name="inputData" ref="trainingInputData" />
+		<property name="outputData" ref="trainingOutputData" />
+	</bean>
+
+	<bean id="testingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet">
+		<property name="inputData" ref="testingInputData" />
+		<property name="outputData" ref="testingOutputData" />
+	</bean>
+	
+	<bean id="trainingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData">
+		<property name="data" ref="trainingInputArray" />
+	</bean>
+
+	<bean id="trainingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData">
+		<property name="targetData" ref="trainingTargetArray" />
+	</bean>
+	
+	<util:list id="trainingInputArray">
+		<list><value>1.2</value></list>
+		<list><value>0.3</value></list>
+		<list><value>-0.5</value></list>
+		<list><value>-2.3</value></list>
+		<list><value>1.7</value></list>
+		<list><value>-0.1</value></list>
+		<list><value>-2.7</value></list>
+	</util:list>
+	
+	<util:list id="trainingTargetArray">
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[0])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[1])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[2])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[3])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[4])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[5])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(trainingInputArray[6])}</value></list>
+	</util:list>
+	
+	<bean id="testingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData">
+		<property name="data" ref="testingInputArray" />
+	</bean>
+
+	<bean id="testingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData">
+		<property name="targetData" ref="testingTargetArray" />
+	</bean>
+	
+	<util:list id="testingInputArray">
+		<list><value>-1.7</value></list>
+		<list><value>-1.0</value></list>
+		<list><value>0.0</value></list>
+		<list><value>0.8</value></list>
+		<list><value>2.0</value></list>
+	</util:list>
+	
+	<util:list id="testingTargetArray">
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(testingInputArray[0])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(testingInputArray[1])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(testingInputArray[2])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(testingInputArray[3])}</value></list>
+		<list><value>#{T(io.github.dominikthomas.neuralnet.test.DeltaRuleTest).fncTest(testingInputArray[4])}</value></list>
+	</util:list>
+	
+</beans>
+

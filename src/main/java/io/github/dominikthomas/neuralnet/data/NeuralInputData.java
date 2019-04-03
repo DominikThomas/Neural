@@ -23,11 +23,17 @@ public class NeuralInputData {
     
     public DataNormalization norm;
     
-    public NeuralInputData(ArrayList<ArrayList<Double>> _data){
-        this.numberOfRecords=_data.size();
-        this.numberOfInputs=_data.get(0).size();
-        this.data=_data;
-    }
+    public NeuralInputData() {
+	}
+    
+    void init() {
+    	this.numberOfRecords=data.size();
+    	 for(int i=0;i<numberOfRecords;i++){
+             if(this.numberOfInputs==0){
+                 this.numberOfInputs=data.get(i).size();
+             }
+    	 }
+	}
     
     public NeuralInputData(double[][] _data){
         this.numberOfRecords=_data.length;
@@ -183,5 +189,9 @@ public class NeuralInputData {
         }
         
     }
+    
+    public void setData(ArrayList<ArrayList<Double>> data) {
+		this.data = data;
+	}
     
 }

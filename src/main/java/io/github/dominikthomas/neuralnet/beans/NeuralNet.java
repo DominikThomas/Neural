@@ -297,6 +297,13 @@ public class NeuralNet {
     }
     
     /**
+     * Gets number of outputs
+     * @return number of outputs  
+     */
+    public int getNumberOfOutputs(){
+        return numberOfOutputs;
+    }
+    /**
      * Gets input layer
      * @return input layer object 
      */
