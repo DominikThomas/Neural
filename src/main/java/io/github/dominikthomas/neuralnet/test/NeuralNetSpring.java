@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import io.github.dominikthomas.neuralnet.beans.NeuralException;
 import io.github.dominikthomas.neuralnet.beans.NeuralNet;
 import io.github.dominikthomas.neuralnet.math.RandomNumberGenerator;
 
@@ -25,25 +26,27 @@ public class NeuralNetSpring {
 		// loading the definitions from the given XML file
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"neuralnetspring/applicationContext.xml");
- 
-		NeuralNet nn = (NeuralNet) context
-				.getBean("neuralNet");
-		
-        double [] neuralInput = { 1.5 , 0.5 };
-        
-        double [] neuralOutput;
-        nn.setInputs(neuralInput);
-        nn.calc();
-        neuralOutput=nn.getOutputs();
-        System.out.println(Arrays.toString(neuralOutput));
-
-        neuralInput[0] = 1.0;
-        neuralInput[1] = 2.1;
-        
-        nn.setInputs(neuralInput);
-        nn.calc();
-        neuralOutput=nn.getOutputs();
-        System.out.println(Arrays.toString(neuralOutput));
-        
+		try {
+			NeuralNet nn = (NeuralNet) context
+					.getBean("neuralNet");
+			
+	        double [] neuralInput = { 1.5 , 0.5 };
+	        
+	        double [] neuralOutput;
+	        nn.setInputs(neuralInput);
+	        nn.calc();
+	        neuralOutput=nn.getOutputs();
+	        System.out.println(Arrays.toString(neuralOutput));
+	
+	        neuralInput[0] = 1.0;
+	        neuralInput[1] = 2.1;
+	        
+	        nn.setInputs(neuralInput);
+	        nn.calc();
+	        neuralOutput=nn.getOutputs();
+	        System.out.println(Arrays.toString(neuralOutput));
+		} catch (NeuralException e) {
+			e.printStackTrace();
+		}
     }
 }

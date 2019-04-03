@@ -148,18 +148,22 @@ public class NeuralNet {
     /**
      * Feeds an array of real values to the neural network's inputs
      * @param inputs Array of real values to be fed into the neural inputs
+     * @throws NeuralException 
      */
-    public void setInputs(ArrayList<Double> inputs){
+    public void setInputs(ArrayList<Double> inputs) throws NeuralException{
         if(inputs.size()==numberOfInputs){
             this.input=inputs;
+        } else {
+        	throw new NeuralException("Number of inputs is different from the value of the numberOfInputs variable.");
         }
     }
     
     /**
      * Sets a vector of double-precision values into the neural network inputs
      * @param inputs vector of values to be fed into the neural inputs
+     * @throws NeuralException 
      */
-    public void setInputs(double[] inputs){
+    public void setInputs(double[] inputs) throws NeuralException{
         if(inputs.length==numberOfInputs){
             for(int i=0;i<numberOfInputs;i++){
                 try{
@@ -169,6 +173,8 @@ public class NeuralNet {
                     input.add(inputs[i]);
                 }
             }
+        } else {
+        	throw new NeuralException("Number of inputs is different from the value of the numberOfInputs variable.");
         }
     }
     

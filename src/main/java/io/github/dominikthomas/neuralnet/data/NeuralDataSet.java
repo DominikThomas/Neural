@@ -1,5 +1,6 @@
 package io.github.dominikthomas.neuralnet.data;
 
+import io.github.dominikthomas.neuralnet.beans.NeuralException;
 import io.github.dominikthomas.neuralnet.beans.NeuralNet;
 import io.github.dominikthomas.neuralnet.math.ArrayOperations;
 import io.github.dominikthomas.neuralnet.math.RandomNumberGenerator;
@@ -329,7 +330,11 @@ public class NeuralDataSet {
     public void simulate(){
         boolean normalization=(inputNorm!=null);
         for(int i=0;i<numberOfRecords;i++){
-            neuralNet.setInputs(this.getInputRecord(i,normalization));
+            try {
+				neuralNet.setInputs(this.getInputRecord(i,normalization));
+			} catch (NeuralException e) {
+				e.printStackTrace();
+			}
             neuralNet.calc();
             this.setNeuralOutput(i, neuralNet.getOutputs(),normalization);
         }
