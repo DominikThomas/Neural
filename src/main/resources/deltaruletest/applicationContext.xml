@@ -33,21 +33,21 @@
 		<property name="neuralNet" ref="neuralNet" />
 	</bean>
 
-	<bean id="trainingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet">
+	<bean id="trainingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet" init-method="init">
 		<property name="inputData" ref="trainingInputData" />
 		<property name="outputData" ref="trainingOutputData" />
 	</bean>
 
-	<bean id="testingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet">
+	<bean id="testingDataSet" class="io.github.dominikthomas.neuralnet.data.NeuralDataSet" init-method="init">
 		<property name="inputData" ref="testingInputData" />
 		<property name="outputData" ref="testingOutputData" />
 	</bean>
 	
-	<bean id="trainingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData">
+	<bean id="trainingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData" init-method="init">
 		<property name="data" ref="trainingInputArray" />
 	</bean>
 
-	<bean id="trainingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData">
+	<bean id="trainingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData" init-method="init">
 		<property name="targetData" ref="trainingTargetArray" />
 	</bean>
 	
