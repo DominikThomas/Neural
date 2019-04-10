@@ -105,7 +105,7 @@ public class DeltaRule extends LearningAlgorithm {
         for(int i=0;i<_testingDataSet.numberOfRecords;i++){
             this.testingGeneralError.add(null);
             this.testingError.add(new ArrayList<Double>());
-            for(int j=0;j<this.neuralNet.getNumberOfOutputs();j++){
+            for(int j=0;j<this.neuralNet.getOutputLayer().getNumberOfNeuronsInLayer();j++){
                 if(i==0){
                     this.testingOverallError.add(null);
                 }
