@@ -355,14 +355,16 @@ public class NeuralNet {
      * Activates bias
      */
     public void activateBias(){
-        for(HiddenLayer hl:hiddenLayers){
-            for(Neuron n:hl.getListOfNeurons()){
-                n.activateBias();
-            }
-        }
-        for(Neuron n:outputLayer.getListOfNeurons()){
-            n.activateBias();
-        }
+    	if(numberOfHiddenLayers>0){
+	        for(HiddenLayer hl:hiddenLayers){
+	            for(Neuron n:hl.getListOfNeurons()){
+	                n.activateBias();
+	            }
+	        }
+	        for(Neuron n:outputLayer.getListOfNeurons()){
+	            n.activateBias();
+	        }
+    	}
     }
     
     /**
