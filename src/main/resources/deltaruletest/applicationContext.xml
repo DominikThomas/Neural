@@ -43,11 +43,11 @@
 		<property name="outputData" ref="testingOutputData" />
 	</bean>
 	
-	<bean id="trainingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData" init-method="init">
+	<bean id="trainingInputData" class="io.github.dominikthomas.neuralnet.data.NeuralInputData">
 		<property name="data" ref="trainingInputArray" />
 	</bean>
 
-	<bean id="trainingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData" init-method="init">
+	<bean id="trainingOutputData" class="io.github.dominikthomas.neuralnet.data.NeuralOutputData">
 		<property name="targetData" ref="trainingTargetArray" />
 	</bean>
 	

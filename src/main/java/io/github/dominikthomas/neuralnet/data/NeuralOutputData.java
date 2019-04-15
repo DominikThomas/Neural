@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import io.github.dominikthomas.neuralnet.beans.NeuralNet;
 import io.github.dominikthomas.neuralnet.math.ArrayOperations;
 
-/** 
+/**
  * This class keeps neural output parameters and operations 
  * @author Alan de Souza, Fabio Soares
  * @version 0.1
@@ -26,19 +26,10 @@ public class NeuralOutputData {
     public ArrayList<ArrayList<Double>> normNeuralData;
     
     private DataNormalization norm;
-    
-    public NeuralOutputData(){
     	
-    }
+    public NeuralOutputData(){
     
-    void init() {
-    	this.numberOfRecords=targetData.size();
-    	 for(int i=0;i<numberOfRecords;i++){
-             if(this.numberOfOutputs==0){
-                 this.numberOfOutputs=targetData.get(i).size();
-             }
-    	 }
-	}
+    }
     
     public NeuralOutputData(double[][] _data){
         this.numberOfRecords=_data.length;
@@ -60,12 +51,12 @@ public class NeuralOutputData {
     public ArrayList<ArrayList<Double>> getTargetDataArrayList(){
         return this.targetData;
     }
-
+    
     public ArrayList<ArrayList<Double>> getTargetDataArrayList(boolean isNorm){
         if(isNorm)
             return this.normTargetData;
         else
-            return this.targetData;
+        return this.targetData;
     }
     
     public Double[][] getTargetData(){
@@ -195,14 +186,14 @@ public class NeuralOutputData {
         	if(this.neuralData.size()<=i) {
         		this.neuralData.add(new ArrayList<>());
         	}
-            this.neuralData.get(i).add(_data[j]);
+            this.neuralData.get(i).set(j,_data[j]);
         }
     }
     
     public void setNeuralData(int i,double[] _data,boolean isNorm){
         if(isNorm){
             double[][] _mdata = new double[1][_data.length];
-            for(int j=0;j<numberOfOutputs;j++){
+        for(int j=0;j<numberOfOutputs;j++){
                 this.normNeuralData.get(i).set(j, _data[j]);
                 _mdata[0][j]=_data[j];
             }
@@ -232,7 +223,7 @@ public class NeuralOutputData {
         }
         return result;
     }
-    
+
     public double[] getTargetRecord(int i,boolean isNorm){
         if(isNorm)
             return ArrayOperations.getRow(normTargetData, i);
@@ -345,12 +336,11 @@ public class NeuralOutputData {
     
     public void printTarget(){
         System.out.println("Targets:");
-        //numberOfRecords = 10;
         for(int k=0;k<numberOfRecords;k++){
-            //System.out.print("Target Output["+String.valueOf(k)+"]={ ");
+            System.out.print("Target Output["+String.valueOf(k)+"]={ ");
             for(int i=0;i<numberOfOutputs;i++){
                 if(i==numberOfOutputs-1){
-                    System.out.print(String.valueOf(this.targetData.get(k).get(i))+"\n");
+                    System.out.print(String.valueOf(this.targetData.get(k).get(i))+"}\n");
                 }
                 else{
                     System.out.print(String.valueOf(this.targetData.get(k).get(i))+"\t");
@@ -361,12 +351,11 @@ public class NeuralOutputData {
     
     public void printNeural(){
         System.out.println("Neural:");
-        //numberOfRecords = 10;
         for(int k=0;k<numberOfRecords;k++){
-            //System.out.print("Neural Output["+String.valueOf(k)+"]={ ");
+            System.out.print("Neural Output["+String.valueOf(k)+"]={ ");
             for(int i=0;i<numberOfOutputs;i++){
                 if(i==numberOfOutputs-1){
-                    System.out.print(String.valueOf(this.neuralData.get(k).get(i))+"\n");
+                    System.out.print(String.valueOf(this.neuralData.get(k).get(i))+"}\n");
                 }
                 else{
                     System.out.print(String.valueOf(this.neuralData.get(k).get(i))+"\t");
@@ -403,7 +392,7 @@ public class NeuralOutputData {
             }
         }
     }
-    
+
     public double[][] calculateConfusionMatrix(int[] estimatedData, double[] realData) {
     	double TP = 0.0;
 		double TN = 0.0;
@@ -448,8 +437,8 @@ public class NeuralOutputData {
 		
 		return new double[][] {{TP,FN},{FP,TN}};
 		
-	}
-    
+    }
+		
     public void calculatePerformanceMeasures(double[][] confMat) {
 		// positive class error rate
 		double errorRatePositive = confMat[0][1] / (confMat[0][0]+confMat[0][1]);
@@ -479,6 +468,16 @@ public class NeuralOutputData {
     
     public void setTargetData(ArrayList<ArrayList<Double>> targetData) {
 		this.targetData = targetData;
-	}
+        this.numberOfRecords=targetData.size();
+        this.numberOfOutputs=targetData.get(0).size();
+        this.neuralData=new ArrayList<>();
+        for(int i=0;i<numberOfRecords;i++){
+            this.neuralData.add(new ArrayList());
+            for(int j=0;j<numberOfOutputs;j++){
+                this.neuralData.get(i).add(null);
+            }
+        }
 
+	}
+    
 }

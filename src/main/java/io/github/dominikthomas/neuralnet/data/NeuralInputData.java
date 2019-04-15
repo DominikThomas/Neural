@@ -5,7 +5,7 @@ import io.github.dominikthomas.neuralnet.math.ArrayOperations;
 
 import java.util.ArrayList;
 
-/** 
+/**
  * This class keeps neural input parameters and operations 
  * @author Alan de Souza, Fabio Soares
  * @version 0.1
@@ -22,18 +22,9 @@ public class NeuralInputData {
     public ArrayList<ArrayList<Double>> normdata;
     
     public DataNormalization norm;
-    
     public NeuralInputData() {
-	}
-    
-    void init() {
-    	this.numberOfRecords=data.size();
-    	 for(int i=0;i<numberOfRecords;i++){
-             if(this.numberOfInputs==0){
-                 this.numberOfInputs=data.get(i).size();
-             }
-    	 }
-	}
+    	
+    }
     
     public NeuralInputData(double[][] _data){
         this.numberOfRecords=_data.length;
@@ -107,7 +98,7 @@ public class NeuralInputData {
                 if(isNorm)
                     result[i][j]=this.normdata.get(i).get(j);
                 else
-                    result[i][j]=this.data.get(i).get(j);
+                result[i][j]=this.data.get(i).get(j);
             }
         }
         return result;
@@ -192,6 +183,8 @@ public class NeuralInputData {
     
     public void setData(ArrayList<ArrayList<Double>> data) {
 		this.data = data;
+        this.numberOfRecords=data.size();
+        this.numberOfInputs=data.get(0).size();
 	}
     
 }
