@@ -471,4 +471,7 @@ public class NeuralNet {
 		this.outputLayer = outputLayer;
 	}
     
+    public void setActiveBias(boolean activeBias) {
+		this.activeBias = activeBias;
+	}
 }
