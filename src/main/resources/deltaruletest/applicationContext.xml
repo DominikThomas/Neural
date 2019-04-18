@@ -21,7 +21,7 @@
 		<property name="testingDataSet" ref="testingDataSet" />
 	</bean>
 
-	<bean id="neuralNet" class="io.github.dominikthomas.neuralnet.beans.NeuralNet">
+	<bean id="neuralNet" class="io.github.dominikthomas.neuralnet.beans.NeuralNet" init-method="init">
 		<property name="numberOfInputs" value="1" />
 		<property name="outputLayer" ref="outputLayer" />
 	</bean>

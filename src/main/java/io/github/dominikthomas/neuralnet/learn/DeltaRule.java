@@ -45,7 +45,6 @@ public class DeltaRule extends LearningAlgorithm {
     }
     
     public void init() {
-    	neuralNet.init();
     	getTrainingDataSet().init();
     	getTestingDataSet().init();
     	this.learningParadigm=LearningParadigm.SUPERVISED;
